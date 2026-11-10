@@ -117,6 +117,20 @@ export default function Navbar() {
               Home
             </Link>
 
+            <Link 
+              href="/gallery" 
+              style={{
+                color: pathname?.startsWith('/gallery') ? '#1f6f68' : '#262626',
+                borderBottom: pathname?.startsWith('/gallery') ? '2px solid #1f6f68' : 'none',
+                paddingBottom: '4px',
+                fontSize: '14px',
+                fontWeight: pathname?.startsWith('/gallery') ? 600 : 500,
+                whiteSpace: 'nowrap'
+              }}
+            >
+              Gallery
+            </Link>
+
             {/* Collection Dropdown */}
             <div 
               style={{ position: 'relative' }}
@@ -152,6 +166,9 @@ export default function Navbar() {
                   minWidth: '220px',
                   zIndex: 100
                 }}>
+                  <Link href="/gallery" style={{ display: 'block', padding: '8px 18px', color: pathname?.startsWith('/gallery') ? '#1f6f68' : '#333', fontWeight: pathname?.startsWith('/gallery') ? 700 : 500, fontSize: '13px', whiteSpace: 'nowrap', background: pathname?.startsWith('/gallery') ? '#f5efe6' : 'transparent' }}>
+                    ✦ Design Gallery &amp; Collections
+                  </Link>
                   <Link href="/services#programs" style={{ display: 'block', padding: '8px 18px', color: '#333', fontSize: '13px', whiteSpace: 'nowrap' }}>
                     Memorial Programs
                   </Link>
@@ -318,9 +335,16 @@ export default function Navbar() {
             <Link 
               href="/" 
               onClick={() => setMobileMenuOpen(false)}
-              style={{ padding: '6px 0', fontSize: '15px', fontWeight: 600, color: '#1f6f68' }}
+              style={{ padding: '6px 0', fontSize: '15px', fontWeight: 600, color: pathname === '/' ? '#1f6f68' : '#262626' }}
             >
               Home
+            </Link>
+            <Link 
+              href="/gallery" 
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ padding: '6px 0', fontSize: '15px', fontWeight: pathname?.startsWith('/gallery') ? 700 : 600, color: '#1f6f68' }}
+            >
+              ✦ Design Gallery &amp; Collections
             </Link>
             <Link 
               href="/services#programs" 

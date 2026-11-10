@@ -49,6 +49,7 @@ export default function Footer() {
           {/* Collection */}
           <div>
             <p className="fh">Our Collection</p>
+            <Link href="/gallery" style={{ fontWeight: 600, color: '#1f6f68' }}>Design Gallery &amp; Collections</Link>
             <Link href="/services#programs">Memorial Programs</Link>
             <Link href="/services/prayer-cards">Prayer Cards &amp; Keepsakes</Link>
             <Link href="/services#digital">Digital Memorials</Link>

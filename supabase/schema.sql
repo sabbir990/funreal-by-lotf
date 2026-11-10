@@ -177,3 +177,56 @@ VALUES
   true
 )
 ON CONFLICT DO NOTHING;
+
+
+-- ====================================================================
+-- 6. Design Gallery & Collections Tables (Editable Gallery Catalog)
+-- ====================================================================
+
+CREATE TABLE IF NOT EXISTS public.gallery_collections (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  slug TEXT UNIQUE NOT NULL,
+  description TEXT,
+  cover_design_number TEXT,
+  cover_image TEXT,
+  accent_color TEXT DEFAULT '#1f6f68',
+  display_order INT DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS public.gallery_designs (
+  id TEXT PRIMARY KEY,
+  design_number TEXT UNIQUE NOT NULL,
+  title TEXT NOT NULL,
+  collection_id TEXT REFERENCES public.gallery_collections(id) ON DELETE CASCADE,
+  collection_name TEXT NOT NULL,
+  description TEXT,
+  theme TEXT,
+  cover_image TEXT NOT NULL,
+  inside_spread_image TEXT,
+  available_formats TEXT[] DEFAULT ARRAY['4-page', '6-page', '8-page booklet', 'Trifold'],
+  popular_addons TEXT[] DEFAULT ARRAY['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
+  tags TEXT[] DEFAULT ARRAY[]::TEXT[],
+  is_featured BOOLEAN DEFAULT FALSE,
+  is_active BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Public Read RLS Policies
+ALTER TABLE public.gallery_collections ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.gallery_designs ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Public read for gallery_collections" ON public.gallery_collections FOR SELECT USING (true);
+CREATE POLICY "Public read for gallery_designs" ON public.gallery_designs FOR SELECT USING (is_active = true);
+
+-- Seed Gallery Collections
+INSERT INTO public.gallery_collections (id, name, slug, description, cover_design_number, display_order)
+VALUES
+('signature', 'Signature Collection', 'signature', 'Our classic, most-loved program designs.', '101', 1),
+('prestige', 'Prestige Collection', 'prestige', 'Elegant, premium-look designs.', '201', 2),
+('religious', 'Religious', 'religious', 'Faith-based designs and scripture themes.', '301', 3),
+('hobbies-interests', 'Hobbies & Interests', 'hobbies-interests', 'Designs that reflect a life and its passions.', '401', 4),
+('youth', 'Youth', 'youth', 'Designs for children and young lives.', '501', 5),
+('floral', 'Floral', 'floral', 'Garden and floral designs.', '601', 6)
+ON CONFLICT (id) DO NOTHING;
