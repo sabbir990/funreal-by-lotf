@@ -381,3 +381,4 @@ export function InsideSpreadView({ design, showLabel = true }: InsideSpreadProps
     </div>
   )
 }
+

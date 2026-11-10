@@ -374,3 +374,4 @@ export function getDesignsByCollection(collectionId: string): GalleryDesign[] {
 export function getDesignById(id: string): GalleryDesign | undefined {
   return GALLERY_DESIGNS.find(d => d.id === id || d.designNumber === id)
 }
+
