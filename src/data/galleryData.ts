@@ -636,6 +636,134 @@ export const GALLERY_DESIGNS: GalleryDesign[] = [
     tags: ['Modern & Minimalist', 'Clean typography', 'Monochrome', 'Geometric', 'Black and white']
   },
 
+  // Vintage & Retro
+  {
+    id: 'antique-gold-sepia',
+    designNumber: '1501',
+    title: 'Antique Gold & Sepia Nostalgia',
+    collectionId: 'vintage-retro',
+    collectionName: 'Vintage & Retro',
+    description: 'Antique gold, nostalgic photographs, vintage florals, old-fashioned typography, and sepia backgrounds.',
+    theme: 'Nostalgic Sepia & Antique Floral Typography',
+    coverImage: 'https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Vintage & Retro', 'Antique gold', 'Nostalgic photographs', 'Vintage florals', 'Old-fashioned typography', 'Sepia backgrounds']
+  },
+
+  // Royalty & Regal
+  {
+    id: 'crown-pearls-regal',
+    designNumber: '1601',
+    title: 'Royal Crown & Diamond Majesty',
+    collectionId: 'royalty-regal',
+    collectionName: 'Royalty & Regal',
+    description: 'Crowns, pearls, gold and diamond accents, fashion, and regal glamour honoring our cherished royalty.',
+    theme: 'Crowns, Pearls & Diamond Glamour',
+    coverImage: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Royalty & Regal', 'Crowns', 'Pearls', 'Gold and diamond accents', 'Fashion & glamour']
+  },
+
+  // Automotive & Transportation
+  {
+    id: 'classic-motors-highway',
+    designNumber: '1701',
+    title: 'Classic Horizon & Motoring',
+    collectionId: 'automotive-transportation',
+    collectionName: 'Automotive & Transportation',
+    description: 'Honoring automotive enthusiasts with classic cars, motorcycles, trucks, trains, and aviation tributes.',
+    theme: 'Classic Cars, Motorcycles & Open Roads',
+    coverImage: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Automotive & Transportation', 'Classic cars', 'Motorcycles', 'Trucks', 'Trains', 'Aviation', 'Automobile enthusiasts']
+  },
+
+  // Travel & Destinations
+  {
+    id: 'wanderlust-landmarks',
+    designNumber: '1801',
+    title: 'Passport of Life & World Landmarks',
+    collectionId: 'travel-destinations',
+    collectionName: 'Travel & Destinations',
+    description: 'Celebrates a life of wanderlust: vintage maps, compass motifs, passports, world landmarks, and beloved vacation cities.',
+    theme: 'Maps, Passports & World Landmarks',
+    coverImage: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Travel & Destinations', 'Maps', 'Passports', 'World landmarks', 'Favorite cities', 'Vacation destinations']
+  },
+
+  // Careers & Professions
+  {
+    id: 'noble-calling-educator',
+    designNumber: '1901',
+    title: 'Noble Calling & Dedicated Service',
+    collectionId: 'careers-professions',
+    collectionName: 'Careers & Professions',
+    description: 'Honoring a life of dedicated vocation: teachers, nurses, doctors, chefs, barbers, clergy, entrepreneurs, and educators.',
+    theme: 'Teachers, Healers & Community Leaders',
+    coverImage: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Careers & Professions', 'Teachers', 'Nurses', 'Doctors', 'Chefs', 'Barbers', 'Entrepreneurs', 'Clergy', 'Educators']
+  },
+
+  // Fraternal & Community Organizations
+  {
+    id: 'brotherhood-eastern-star',
+    designNumber: '2001',
+    title: 'Fraternal Brotherhood & Eastern Star',
+    collectionId: 'fraternal-community',
+    collectionName: 'Fraternal & Community Organizations',
+    description: 'Masonic-inspired themes, Order of the Eastern Star, Greek-letter fraternities and sororities, and civic service.',
+    theme: 'Masonic Themes, Eastern Star & Greek Life',
+    coverImage: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Fraternal & Community Organizations', 'Masonic-inspired themes', 'Eastern Star', 'Greek-letter organizations', 'Civic groups', 'Community service']
+  },
+
+  // Patriotic
+  {
+    id: 'stars-stripes-liberty',
+    designNumber: '2101',
+    title: 'Old Glory & National Pride',
+    collectionId: 'patriotic',
+    collectionName: 'Patriotic',
+    description: 'Flags, national themes, and enduring pride in dedicated service to country and community.',
+    theme: 'American Flag, Liberty & Patriotic Pride',
+    coverImage: 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1579975097566-b251bc5d918c?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Patriotic', 'Flags', 'National themes and pride', 'Service to country']
+  },
+
+  // Seasonal & Holiday Inspired
+  {
+    id: 'autumn-embrace-seasons',
+    designNumber: '2201',
+    title: 'Four Seasons & Seasonal Grace',
+    collectionId: 'seasonal-holiday',
+    collectionName: 'Seasonal & Holiday Inspired',
+    description: 'Spring blossoms, vibrant summer landscapes, rich autumn foliage, winter snowflakes, and Christmas tributes.',
+    theme: 'Spring Blossoms, Autumn Foliage & Winter Peace',
+    coverImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Seasonal & Holiday Inspired', 'Spring blossoms', 'Summer landscapes', 'Autumn foliage', 'Winter snowflakes', 'Christmas-inspired elements']
+  },
+
   // Custom & Personalized
   {
     id: 'photo-collage-celebration',
