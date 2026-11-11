@@ -17,15 +17,17 @@ import {
   ShieldCheck, 
   ChevronRight, 
   CheckCircle2, 
-  Info 
+  Info,
+  Eye,
+  BookOpen
 } from 'lucide-react'
 import { 
   getDesignById, 
   getDesignsByCollection, 
-  GALLERY_DESIGNS,
+  GALLERY_DESIGNS, 
   GalleryDesign 
 } from '@/data/galleryData'
-import { CoverFlatView, InsideSpreadView } from '@/components/DesignPreviewFrame'
+import { CoverFlatView, InsideSpreadView, BackCoverView } from '@/components/DesignPreviewFrame'
 import OrderInquiryModal from '@/components/OrderInquiryModal'
 
 function DesignDetailContent({ params }: { params: Promise<{ id: string }> }) {
@@ -36,8 +38,9 @@ function DesignDetailContent({ params }: { params: Promise<{ id: string }> }) {
   const [orderModalOpen, setOrderModalOpen] = useState(false)
   const [copied, setCopied] = useState(false)
   const [selectedFormat, setSelectedFormat] = useState<string>(
-    design?.availableFormats?.[0] || '4-page'
+    design?.availableFormats?.[0] || '4-Page'
   )
+  const [previewTab, setPreviewTab] = useState<'all' | 'front' | 'inside' | 'back'>('all')
 
   if (!design) {
     notFound()
@@ -117,43 +120,194 @@ function DesignDetailContent({ params }: { params: Promise<{ id: string }> }) {
         </div>
       </div>
 
-      {/* 2. Page 2 — Inside a Design Main Presentation */}
-      <div className="site-container" style={{ paddingTop: '36px' }}>
-        {/* Visual Presentation (Cover Flat beside Inside Open Spread) */}
+      {/* 2. Visual Presentation Controls (Front Cover, Inside Spread, Back Cover) */}
+      <div className="site-container" style={{ paddingTop: '32px' }}>
+        
+        {/* Preview Selector Toolbar */}
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(280px, 340px) 1fr',
-          gap: 'clamp(24px, 4vw, 44px)',
-          alignItems: 'start',
-          marginBottom: '40px'
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '22px',
+          flexWrap: 'wrap',
+          gap: '12px',
+          background: '#faf8f4',
+          padding: '12px 18px',
+          borderRadius: '6px',
+          border: '1px solid #e8dfd2'
         }}>
-          {/* Left Column: Cover - Flat View */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '11.5px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#1f6f68' }}>
+              Preview Options:
+            </span>
+            <span style={{ fontSize: '12px', color: '#666' }}>
+              View the complete memorial program design
+            </span>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+            <button
+              onClick={() => setPreviewTab('all')}
+              style={{
+                padding: '6px 14px',
+                borderRadius: '4px',
+                fontSize: '12px',
+                fontWeight: previewTab === 'all' ? 700 : 500,
+                border: previewTab === 'all' ? '1px solid #1f6f68' : '1px solid #cfcfcf',
+                background: previewTab === 'all' ? '#1f6f68' : '#ffffff',
+                color: previewTab === 'all' ? '#ffffff' : '#333',
+                cursor: 'pointer',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              All Previews
+            </button>
+            <button
+              onClick={() => setPreviewTab('front')}
+              style={{
+                padding: '6px 14px',
+                borderRadius: '4px',
+                fontSize: '12px',
+                fontWeight: previewTab === 'front' ? 700 : 500,
+                border: previewTab === 'front' ? '1px solid #1f6f68' : '1px solid #cfcfcf',
+                background: previewTab === 'front' ? '#1f6f68' : '#ffffff',
+                color: previewTab === 'front' ? '#ffffff' : '#333',
+                cursor: 'pointer',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              Front Cover
+            </button>
+            <button
+              onClick={() => setPreviewTab('inside')}
+              style={{
+                padding: '6px 14px',
+                borderRadius: '4px',
+                fontSize: '12px',
+                fontWeight: previewTab === 'inside' ? 700 : 500,
+                border: previewTab === 'inside' ? '1px solid #1f6f68' : '1px solid #cfcfcf',
+                background: previewTab === 'inside' ? '#1f6f68' : '#ffffff',
+                color: previewTab === 'inside' ? '#ffffff' : '#333',
+                cursor: 'pointer',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              Inside Spread
+            </button>
+            <button
+              onClick={() => setPreviewTab('back')}
+              style={{
+                padding: '6px 14px',
+                borderRadius: '4px',
+                fontSize: '12px',
+                fontWeight: previewTab === 'back' ? 700 : 500,
+                border: previewTab === 'back' ? '1px solid #1f6f68' : '1px solid #cfcfcf',
+                background: previewTab === 'back' ? '#1f6f68' : '#ffffff',
+                color: previewTab === 'back' ? '#ffffff' : '#333',
+                cursor: 'pointer',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              Back Cover
+            </button>
+          </div>
+        </div>
+
+        {/* Visual Presentation Views */}
+        {previewTab === 'all' && (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'minmax(260px, 310px) 1.25fr minmax(260px, 310px)',
+            gap: '20px',
+            alignItems: 'start',
+            marginBottom: '40px'
+          }}>
+            {/* 1. Front Cover */}
+            <div style={{
+              background: '#faf8f4',
+              padding: '20px 16px',
+              borderRadius: '6px',
+              border: '1px solid #e8dfd2',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}>
+              <CoverFlatView design={design} showLabel={true} />
+            </div>
+
+            {/* 2. Inside Spread */}
+            <div style={{
+              background: '#faf8f4',
+              padding: '20px 20px 16px',
+              borderRadius: '6px',
+              border: '1px solid #e8dfd2',
+              display: 'flex',
+              flexDirection: 'column'
+            }}>
+              <InsideSpreadView design={design} showLabel={true} />
+            </div>
+
+            {/* 3. Back Cover */}
+            <div style={{
+              background: '#faf8f4',
+              padding: '20px 16px',
+              borderRadius: '6px',
+              border: '1px solid #e8dfd2',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}>
+              <BackCoverView design={design} showLabel={true} />
+            </div>
+          </div>
+        )}
+
+        {previewTab === 'front' && (
           <div style={{
             background: '#faf8f4',
-            padding: '24px 20px',
+            padding: '32px 24px',
             borderRadius: '6px',
             border: '1px solid #e8dfd2',
+            maxWidth: '480px',
+            margin: '0 auto 40px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center'
           }}>
             <CoverFlatView design={design} showLabel={true} />
           </div>
+        )}
 
-          {/* Right Column: Inside - Open Spread */}
+        {previewTab === 'inside' && (
           <div style={{
             background: '#faf8f4',
-            padding: '24px 24px 20px',
+            padding: '32px 28px',
             borderRadius: '6px',
             border: '1px solid #e8dfd2',
-            display: 'flex',
-            flexDirection: 'column'
+            maxWidth: '920px',
+            margin: '0 auto 40px'
           }}>
             <InsideSpreadView design={design} showLabel={true} />
           </div>
-        </div>
+        )}
 
-        {/* 3. Design Information & Ordering Controls (Matching Mockup Specs) */}
+        {previewTab === 'back' && (
+          <div style={{
+            background: '#faf8f4',
+            padding: '32px 24px',
+            borderRadius: '6px',
+            border: '1px solid #e8dfd2',
+            maxWidth: '480px',
+            margin: '0 auto 40px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}>
+            <BackCoverView design={design} showLabel={true} />
+          </div>
+        )}
+
+        {/* 3. Design Information & Ordering Controls */}
         <div style={{
           background: '#ffffff',
           border: '1px solid #e0d5c2',
@@ -312,7 +466,7 @@ function DesignDetailContent({ params }: { params: Promise<{ id: string }> }) {
                 Order With Design #{design.designNumber}
               </h3>
               <p style={{ fontSize: '13.5px', color: '#555', lineHeight: 1.6, margin: '0 0 20px' }}>
-                Ready to create this program for your loved one? Clicking the order button locks <strong>Design No. {design.designNumber}</strong> into your inquiry so our design studio knows your exact selection immediately.
+                Ready to create this program for your loved one? Clicking the order button locks <strong>Design No. {design.designNumber}</strong> into your inquiry and carries it directly into our order form.
               </p>
 
               <div style={{
@@ -340,14 +494,14 @@ function DesignDetailContent({ params }: { params: Promise<{ id: string }> }) {
                   <span>{design.collectionName}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span>Turnaround:</span>
-                  <span style={{ color: '#1f6f68', fontWeight: 600 }}>Same Day / 24–48 Hours</span>
+                  <span>Standard Turnaround:</span>
+                  <span style={{ color: '#1f6f68', fontWeight: 600 }}>4 Business Days</span>
                 </div>
               </div>
             </div>
 
             <div>
-              {/* Primary Action: ORDER THIS DESIGN (as in mockup) */}
+              {/* Primary Action */}
               <button
                 onClick={() => setOrderModalOpen(true)}
                 className="b b1"
@@ -368,7 +522,6 @@ function DesignDetailContent({ params }: { params: Promise<{ id: string }> }) {
                 ORDER THIS DESIGN
               </button>
 
-              {/* Caption from Mockup */}
               <p style={{
                 fontSize: '11.5px',
                 color: '#777',
@@ -376,7 +529,7 @@ function DesignDetailContent({ params }: { params: Promise<{ id: string }> }) {
                 margin: '8px 0 0',
                 fontStyle: 'italic'
               }}>
-                Carries Design No. {design.designNumber} straight into the order form.
+                Carries Design No. {design.designNumber} and program specifications straight into the order form.
               </p>
 
               <div style={{
@@ -390,8 +543,8 @@ function DesignDetailContent({ params }: { params: Promise<{ id: string }> }) {
                 color: '#666'
               }}>
                 <span>Need immediate advice?</span>
-                <a href="tel:7189242004" style={{ color: '#1f6f68', fontWeight: 700 }}>
-                  (718) 924-2004
+                <a href="tel:9173001104" style={{ color: '#1f6f68', fontWeight: 700 }}>
+                  (917) 300-1104
                 </a>
               </div>
             </div>
@@ -449,22 +602,24 @@ function DesignDetailContent({ params }: { params: Promise<{ id: string }> }) {
                     e.currentTarget.style.boxShadow = 'none'
                   }}
                 >
-                  <div style={{ width: '60px', height: '80px', flexShrink: 0, overflow: 'hidden', borderRadius: '3px', boxShadow: '0 2px 6px rgba(0,0,0,0.1)' }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={rel.coverImage}
-                      alt={rel.title}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                  </div>
+                  <div style={{
+                    width: '64px',
+                    height: '80px',
+                    backgroundImage: `url(${rel.coverImage})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    borderRadius: '3px',
+                    border: '1px solid #dcd3c4',
+                    flexShrink: 0
+                  }} />
                   <div>
-                    <div style={{ fontSize: '11px', color: '#1f6f68', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                      Design No. {rel.designNumber}
+                    <div style={{ fontSize: '11px', color: '#1f6f68', fontWeight: 700, textTransform: 'uppercase' }}>
+                      Design #{rel.designNumber}
                     </div>
-                    <div className="s" style={{ fontSize: '16px', color: '#262626', fontWeight: 600, margin: '2px 0' }}>
+                    <div className="s" style={{ fontSize: '16px', color: '#262626', margin: '2px 0 4px', fontWeight: 600 }}>
                       {rel.title}
                     </div>
-                    <div style={{ fontSize: '12px', color: '#777' }}>
+                    <div style={{ fontSize: '12px', color: '#666' }}>
                       {rel.theme}
                     </div>
                   </div>
@@ -475,11 +630,11 @@ function DesignDetailContent({ params }: { params: Promise<{ id: string }> }) {
         )}
       </div>
 
-      {/* Order Inquiry Modal with Design Pre-filled */}
-      <OrderInquiryModal
-        isOpen={orderModalOpen}
-        onClose={() => setOrderModalOpen(false)}
-        design={design}
+      {/* Program Specifications / Order Modal */}
+      <OrderInquiryModal 
+        isOpen={orderModalOpen} 
+        onClose={() => setOrderModalOpen(false)} 
+        design={design} 
       />
     </div>
   )
@@ -488,9 +643,8 @@ function DesignDetailContent({ params }: { params: Promise<{ id: string }> }) {
 export default function DesignDetailPage({ params }: { params: Promise<{ id: string }> }) {
   return (
     <Suspense fallback={
-      <div style={{ textAlign: 'center', padding: '120px 20px', color: '#666' }}>
-        <p className="s" style={{ fontSize: '24px', color: '#262626', marginBottom: '8px' }}>Lilies of the Field</p>
-        <p style={{ fontSize: '14px' }}>Loading design layout...</p>
+      <div style={{ padding: '80px 20px', textAlign: 'center', color: '#666' }}>
+        Loading program design preview...
       </div>
     }>
       <DesignDetailContent params={params} />

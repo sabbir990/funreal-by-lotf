@@ -9,11 +9,11 @@ export default function ServicesPage() {
       title="Bespoke Keepsakes &amp; Services"
       subtitle="Online Ordering &amp; Interactive Catalog Launching Soon"
       description="We are currently completing our full online ordering suite and interactive product catalog. In the meantime, our Brooklyn design studio is actively designing and printing custom memorial programs, prayer cards, and tribute keepsakes every day."
-      backHref="/"
-      backLabel="Return to Home"
+      backHref="/gallery"
+      backLabel="Browse Design Gallery"
       primaryAction={{
-        href: '/resources',
-        label: 'View Planning Guides'
+        href: '/order',
+        label: 'Place a Program Order'
       }}
     />
   )

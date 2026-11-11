@@ -155,7 +155,7 @@ export default function ComingSoon({
               color: '#262626'
             }}>
               <a 
-                href="tel:7189242004" 
+                href="tel:9173001104" 
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -165,7 +165,7 @@ export default function ComingSoon({
                   fontWeight: 600
                 }}
               >
-                <Phone size={14} color="#1f6f68" /> (718) 924-2004
+                <Phone size={14} color="#1f6f68" /> (917) 300-1104
               </a>
               <a 
                 href="mailto:orders@liliesofthefield.design"

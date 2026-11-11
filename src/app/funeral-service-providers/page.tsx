@@ -789,7 +789,7 @@ export default function FuneralServiceProvidersPage() {
                         required
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        placeholder="(718) 555-0199"
+                        placeholder="(917) 300-1104"
                         style={{
                           width: '100%',
                           border: '1px solid #cfcfcf',
@@ -1028,7 +1028,7 @@ export default function FuneralServiceProvidersPage() {
                 color: '#666'
               }}>
                 Need urgent assistance for an upcoming service? <br />
-                Call our direct line: <a href="tel:7189242004" style={{ color: '#1f6f68', fontWeight: 700 }}>(718) 924-2004</a>
+                Call our direct line: <a href="tel:9173001104" style={{ color: '#1f6f68', fontWeight: 700 }}>(917) 300-1104</a>
               </div>
 
             </div>
@@ -1250,7 +1250,7 @@ export default function FuneralServiceProvidersPage() {
                     Send Message
                   </button>
                   <a 
-                    href="tel:7189242004"
+                    href="tel:9173001104"
                     className="b bg"
                     style={{ padding: '10px 14px', fontSize: '12px' }}
                     title="Direct Call"

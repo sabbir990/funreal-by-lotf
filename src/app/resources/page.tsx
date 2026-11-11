@@ -673,7 +673,7 @@ export default function MemorialPlanningGuidesPage() {
                       required 
                       value={consultPhone}
                       onChange={(e) => setConsultPhone(e.target.value)}
-                      placeholder="(718) 000-0000"
+                      placeholder="(917) 300-1104"
                       style={{ width: '100%', padding: '10px 12px', border: '1px solid #dcd5c9', borderRadius: '4px', fontSize: '13.5px' }}
                     />
                   </div>

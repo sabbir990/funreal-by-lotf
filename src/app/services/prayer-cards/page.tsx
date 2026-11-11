@@ -75,26 +75,11 @@ const PRODUCTS: ProductItem[] = [
     description: 'Long-format 2.5" x 7" laminated keepsake bookmarks designed for daily remembrance in devotional books, family bibles, and personal reading.',
     features: [
       'Durable laminated finish',
-      'Optional silk tassel cord in gold, cream, or black',
+      'Optional silk tassel cord in gold, cream, black, or silver',
       'Front portrait with back life scripture',
       'Cherished gift for attendees'
     ],
     recommendedQty: '50 - 150 units'
-  },
-  {
-    id: 'guest-books',
-    series: 'Keepsake Series',
-    turnaroundDays: 4,
-    turnaroundLabel: '4 business days',
-    title: 'Custom Register & Guest Books',
-    description: 'Casebound hard-cover or spiral-bound personalized remembrance register books crafted to coordinate seamlessly with your memorial program design theme.',
-    features: [
-      'Full-color cover personalization',
-      'Acid-free sign-in leaves for attendee notes',
-      'High-durability binding',
-      'Preserved keepsake'
-    ],
-    recommendedQty: '1 - 2 registry books'
   },
   {
     id: 'specialty-tributes',
@@ -102,14 +87,30 @@ const PRODUCTS: ProductItem[] = [
     turnaroundDays: 4,
     turnaroundLabel: '3–4 business days',
     title: 'Specialty Memorial Keepsakes & Tribute Items',
-    description: 'Custom-designed commemorative pieces including commemorative buttons and coordinated tribute tokens for service guests.',
+    description: 'Custom-designed commemorative pieces including personalized register & guest books, commemorative buttons, and coordinated tribute tokens for service guests.',
     features: [
-      'Coordinated color matching',
+      'Custom register & guest books',
+      'Coordinated color matching & themes',
       'Bespoke design arrangements',
       'Family & church group packages',
       'Special requests accommodated'
     ],
-    recommendedQty: 'Custom quantities'
+    recommendedQty: 'Custom packages'
+  },
+  {
+    id: 'photo-tribute-products',
+    series: 'Keepsake Series',
+    turnaroundDays: 3,
+    turnaroundLabel: '3–4 business days',
+    title: 'Photo & Tribute Products',
+    description: 'Large-format commemorative presentation pieces and coordinating tribute items crafted to celebrate and surround your loved one’s ceremony.',
+    features: [
+      'Casket Panels',
+      'Enlarged Photo Boards',
+      'Thank You Cards',
+      'Coordinating design themes'
+    ],
+    recommendedQty: 'Service suite'
   }
 ]
 
@@ -641,7 +642,7 @@ export default function PrayerCardsPage() {
                   textAlign: 'center',
                   marginTop: '2px'
                 }}>
-                  Urgent ceremony deadline? Call our studio directly at <a href="tel:7189242004" style={{ color: '#1f6f68', fontWeight: 700 }}>(718) 924-2004</a>
+                  Urgent ceremony deadline? Call our studio directly at <a href="tel:9173001104" style={{ color: '#1f6f68', fontWeight: 700 }}>(917) 300-1104</a>
                 </div>
 
               </div>
@@ -753,7 +754,7 @@ export default function PrayerCardsPage() {
                         required
                         value={orderForm.phone}
                         onChange={(e) => setOrderForm({ ...orderForm, phone: e.target.value })}
-                        placeholder="(718) 555-0144"
+                        placeholder="(917) 300-1104"
                         style={{ width: '100%', padding: '10px 12px', border: '1px solid #cfcfcf', borderRadius: '4px', fontSize: '13px' }}
                       />
                     </div>
@@ -954,7 +955,7 @@ export default function PrayerCardsPage() {
                     Send Message
                   </button>
                   <a 
-                    href="tel:7189242004"
+                    href="tel:9173001104"
                     className="b bg"
                     style={{ padding: '10px 14px', fontSize: '12px' }}
                     title="Direct Call"

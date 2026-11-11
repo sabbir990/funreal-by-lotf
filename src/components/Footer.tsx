@@ -36,8 +36,7 @@ export default function Footer() {
               Every Life Deserves to Be Celebrated. Premium memorial programs, prayer cards, photo keepsakes and tribute pieces thoughtfully created to honor every life and every story.
             </p>
             <p className="tx" style={{ color: '#262626', lineHeight: 1.6 }}>
-              (718) 924-2004<br />
-              (917) 300-1104<br />
+              <a href="tel:9173001104" style={{ color: '#262626', textDecoration: 'none', fontWeight: 600 }}>(917) 300-1104</a><br />
               orders@liliesofthefield.design<br />
               Monday–Friday · 10am–6pm
             </p>

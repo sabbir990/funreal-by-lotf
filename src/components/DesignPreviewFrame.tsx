@@ -10,7 +10,7 @@ interface CoverFlatProps {
   showLabel?: boolean
 }
 
-export function CoverFlatView({ design, height = '380px', showLabel = true }: CoverFlatProps) {
+export function CoverFlatView({ design, showLabel = true }: CoverFlatProps) {
   return (
     <div style={{ width: '100%' }}>
       {showLabel && (
@@ -20,13 +20,9 @@ export function CoverFlatView({ design, height = '380px', showLabel = true }: Co
           letterSpacing: '0.12em',
           textTransform: 'uppercase',
           color: '#777',
-          marginBottom: '10px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '6px'
+          marginBottom: '10px'
         }}>
-          <span>COVER — FLAT VIEW</span>
-          <span style={{ fontSize: '10px', color: '#999', fontWeight: 500 }}>(Front Cover)</span>
+          FRONT COVER
         </div>
       )}
 
@@ -161,7 +157,7 @@ export function InsideSpreadView({ design, showLabel = true }: InsideSpreadProps
             textTransform: 'uppercase',
             color: '#777'
           }}>
-            INSIDE — OPEN SPREAD
+            INSIDE SPREAD
           </div>
           {/* Black Badge Label as shown in Mockup */}
           <div style={{
@@ -382,3 +378,211 @@ export function InsideSpreadView({ design, showLabel = true }: InsideSpreadProps
   )
 }
 
+interface BackCoverProps {
+  design: GalleryDesign
+  showLabel?: boolean
+}
+
+export function BackCoverView({ design, showLabel = true }: BackCoverProps) {
+  return (
+    <div style={{ width: '100%' }}>
+      {showLabel && (
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '10px'
+        }}>
+          <div style={{
+            fontSize: '11px',
+            fontWeight: 700,
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: '#777'
+          }}>
+            BACK COVER
+          </div>
+          <div style={{
+            background: '#0a100d',
+            color: '#ffffff',
+            fontSize: '10px',
+            fontWeight: 800,
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            padding: '4px 10px',
+            borderRadius: '2px',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.18)'
+          }}>
+            SAMPLE LAYOUT
+          </div>
+        </div>
+      )}
+
+      {/* Flat Back Cover Frame */}
+      <div 
+        style={{
+          width: '100%',
+          maxWidth: '340px',
+          margin: '0 auto',
+          aspectRatio: '1 / 1.414',
+          background: '#ffffff',
+          boxShadow: '0 12px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06)',
+          border: '1px solid #dcd3c4',
+          borderRadius: '3px',
+          position: 'relative',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        {/* Subtle Decorative Header Strip */}
+        <div style={{
+          height: '24px',
+          width: '100%',
+          backgroundImage: `url(${design.coverImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          borderBottom: '1px solid #c9963b',
+          opacity: 0.9
+        }} />
+
+        {/* Back Cover Body Content */}
+        <div style={{
+          flex: 1,
+          padding: '20px 22px 14px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          background: '#fdfbf7',
+          textAlign: 'center'
+        }}>
+          {/* Poem / Prayer Section */}
+          <div>
+            <div style={{
+              fontSize: '9.5px',
+              letterSpacing: '0.16em',
+              textTransform: 'uppercase',
+              color: '#c9963b',
+              fontWeight: 700,
+              marginBottom: '6px'
+            }}>
+              Poem of Remembrance
+            </div>
+            <div style={{
+              fontSize: '10px',
+              fontStyle: 'italic',
+              color: '#444',
+              lineHeight: 1.5,
+              maxWidth: '280px',
+              margin: '0 auto 14px',
+              padding: '8px 12px',
+              background: 'rgba(255,255,255,0.7)',
+              borderRadius: '3px',
+              border: '1px solid #efe8dc'
+            }}>
+              “Don’t grieve for me, for now I’m free;<br />
+              I’m following the path God laid for me.<br />
+              I took His hand when I heard Him call,<br />
+              I turned my back and left it all.”
+            </div>
+
+            {/* Pallbearers & Honorary Section */}
+            <div style={{
+              borderTop: '1px solid #ebd8b5',
+              paddingTop: '10px',
+              marginBottom: '10px',
+              textAlign: 'left'
+            }}>
+              <div style={{
+                fontSize: '8.5px',
+                fontWeight: 700,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                color: '#1f6f68',
+                marginBottom: '4px'
+              }}>
+                Active Pallbearers
+              </div>
+              <div style={{
+                fontSize: '9px',
+                color: '#555',
+                lineHeight: 1.45,
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '2px 8px'
+              }}>
+                <span>Marcus Dawson</span>
+                <span>Anthony Davis</span>
+                <span>David Jenkins</span>
+                <span>Robert Williams</span>
+                <span>Terrence Miller</span>
+                <span>Christopher Lee</span>
+              </div>
+            </div>
+
+            {/* Interment Section */}
+            <div style={{
+              background: '#f5efe6',
+              padding: '6px 10px',
+              borderRadius: '3px',
+              marginBottom: '10px',
+              fontSize: '8.5px',
+              color: '#555',
+              textAlign: 'center'
+            }}>
+              <strong style={{ color: '#262626' }}>Final Resting Place (Interment):</strong><br />
+              Green-Wood Cemetery · Brooklyn, New York
+            </div>
+
+            {/* Acknowledgements Section */}
+            <div style={{ textAlign: 'center' }}>
+              <div style={{
+                fontSize: '8.5px',
+                fontWeight: 700,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: '#262626',
+                marginBottom: '3px'
+              }}>
+                Acknowledgements
+              </div>
+              <p style={{
+                fontSize: '8px',
+                color: '#666',
+                lineHeight: 1.4,
+                margin: 0
+              }}>
+                The family wishes to express their heartfelt gratitude for every act of sympathy, comforting prayer, floral tribute, and kind thought shown during our time of sorrow. May God bless each of you.
+              </p>
+            </div>
+          </div>
+
+          {/* Footer Colophon */}
+          <div style={{
+            borderTop: '1px solid #ebd8b5',
+            paddingTop: '8px',
+            fontSize: '8px',
+            color: '#888',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}>
+            <span style={{ fontWeight: 600, color: '#1f6f68' }}>Lilies of the Field</span>
+            <span>Design No. {design.designNumber}</span>
+          </div>
+        </div>
+      </div>
+
+      <p style={{
+        fontSize: '12px',
+        color: '#666',
+        fontStyle: 'italic',
+        marginTop: '10px',
+        textAlign: 'center',
+        lineHeight: 1.45
+      }}>
+        Visual reference only. Families provide their actual poem, pallbearers, interment details, and acknowledgments during ordering.
+      </p>
+    </div>
+  )
+}

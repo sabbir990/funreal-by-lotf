@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { X, Check, ShieldCheck, Calendar, Phone, Mail, FileText, CheckCircle2, Sparkles, AlertCircle } from 'lucide-react'
-import { GalleryDesign } from '@/data/galleryData'
-import { createClient } from '@/lib/supabase/client'
+import { useRouter } from 'next/navigation'
+import { X, Check, ShieldCheck, ArrowRight, Sparkles, HelpCircle } from 'lucide-react'
+import { GalleryDesign, DEFAULT_FORMATS, DEFAULT_SIZES, DEFAULT_QUANTITIES, DEFAULT_ADDONS } from '@/data/galleryData'
 
 interface OrderInquiryModalProps {
   isOpen: boolean
@@ -16,29 +16,22 @@ export default function OrderInquiryModal({
   onClose,
   design
 }: OrderInquiryModalProps) {
-  const [format, setFormat] = useState('4-page Bi-Fold')
+  const router = useRouter()
+  const [format, setFormat] = useState('4-Page')
+  const [size, setSize] = useState('Standard')
+  const [quantity, setQuantity] = useState('100')
+  const [customQuantity, setCustomQuantity] = useState('')
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([])
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    lovedOneName: '',
-    serviceDate: '',
-    quantity: '100',
-    funeralHome: '',
-    notes: ''
-  })
-  const [submitting, setSubmitting] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
-  const [confirmationCode, setConfirmationCode] = useState('')
+  const [specialRequests, setSpecialRequests] = useState('')
 
   useEffect(() => {
     if (design) {
-      if (design.availableFormats && design.availableFormats.length > 0) {
-        setFormat(design.availableFormats[0])
-      }
+      setFormat(design.availableFormats?.[0] || '4-Page')
+      setSize('Standard')
+      setQuantity('100')
+      setCustomQuantity('')
       setSelectedAddOns([])
-      setSubmitted(false)
+      setSpecialRequests('')
     }
   }, [design])
 
@@ -50,29 +43,47 @@ export default function OrderInquiryModal({
     )
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleContinueToOrder = (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitting(true)
 
-    const code = `LOTF-${design.designNumber}-${Math.floor(1000 + Math.random() * 9000)}`
-    setConfirmationCode(code)
+    const finalQuantity = quantity === '250+' ? (customQuantity.trim() || '250+') : quantity
 
-    try {
-      const supabase = createClient()
-      await supabase.from('service_inquiries').insert({
-        contact_name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        service_package: `Design No. ${design.designNumber}: ${design.title} (${format})`,
-        preferred_date: formData.serviceDate ? formData.serviceDate : null,
-        special_notes: `Loved One: ${formData.lovedOneName} | Funeral Home: ${formData.funeralHome || 'N/A'} | Qty: ${formData.quantity} | Add-ons: ${selectedAddOns.join(', ') || 'None'} | Notes: ${formData.notes || 'None'}`
-      })
-    } catch {
-      // In case Supabase table isn't created yet or offline, continue gracefully
+    const orderDraft = {
+      designNumber: design.designNumber,
+      designTitle: design.title,
+      collectionName: design.collectionName,
+      coverImage: design.coverImage,
+      format,
+      size,
+      quantity: finalQuantity,
+      addOns: selectedAddOns,
+      specialRequests: specialRequests.trim()
     }
 
-    setSubmitting(false)
-    setSubmitted(true)
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('lotf_order_draft', JSON.stringify(orderDraft))
+      } catch {
+        // localStorage fallback
+      }
+    }
+
+    const params = new URLSearchParams()
+    params.set('design', design.designNumber)
+    params.set('title', design.title)
+    params.set('collection', design.collectionName)
+    params.set('format', format)
+    params.set('size', size)
+    params.set('quantity', finalQuantity)
+    if (selectedAddOns.length > 0) {
+      params.set('addons', selectedAddOns.join(';'))
+    }
+    if (specialRequests.trim()) {
+      params.set('requests', specialRequests.trim())
+    }
+
+    onClose()
+    router.push(`/order?${params.toString()}`)
   }
 
   return (
@@ -81,7 +92,7 @@ export default function OrderInquiryModal({
         position: 'fixed',
         inset: 0,
         zIndex: 9999,
-        background: 'rgba(20, 25, 24, 0.7)',
+        background: 'rgba(20, 25, 24, 0.72)',
         backdropFilter: 'blur(5px)',
         display: 'flex',
         alignItems: 'center',
@@ -95,9 +106,9 @@ export default function OrderInquiryModal({
         style={{
           background: '#ffffff',
           borderRadius: '8px',
-          maxWidth: '680px',
+          maxWidth: '640px',
           width: '100%',
-          maxHeight: '90vh',
+          maxHeight: '92vh',
           overflowY: 'auto',
           boxShadow: '0 24px 48px rgba(0,0,0,0.25)',
           border: '1px solid #e0d5c2',
@@ -107,7 +118,7 @@ export default function OrderInquiryModal({
       >
         {/* Modal Header */}
         <div style={{
-          padding: '24px 28px 18px',
+          padding: '22px 26px 18px',
           borderBottom: '1px solid #efe8dc',
           display: 'flex',
           justifyContent: 'space-between',
@@ -124,12 +135,12 @@ export default function OrderInquiryModal({
               letterSpacing: '0.12em',
               textTransform: 'uppercase',
               color: '#1f6f68',
-              marginBottom: '6px'
+              marginBottom: '5px'
             }}>
-              <ShieldCheck size={14} /> Official Design Order Inquiry
+              <ShieldCheck size={14} /> Program Specifications
             </div>
-            <h2 className="s" style={{ fontSize: '24px', color: '#262626', margin: 0, lineHeight: 1.25 }}>
-              Order Design No. {design.designNumber} — {design.title}
+            <h2 className="s" style={{ fontSize: '23px', color: '#262626', margin: 0, lineHeight: 1.25 }}>
+              Design #{design.designNumber} — {design.title}
             </h2>
             <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#666' }}>
               Collection: <strong style={{ color: '#1f6f68' }}>{design.collectionName}</strong>
@@ -152,91 +163,46 @@ export default function OrderInquiryModal({
         </div>
 
         {/* Modal Body */}
-        <div style={{ padding: '24px 28px' }}>
-          {submitted ? (
-            <div style={{ textAlign: 'center', padding: '32px 16px' }}>
-              <div style={{
-                width: '64px',
-                height: '64px',
-                borderRadius: '50%',
-                background: '#dfe9e5',
-                color: '#1f6f68',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 16px'
-              }}>
-                <CheckCircle2 size={36} />
-              </div>
-              <h3 className="s" style={{ fontSize: '26px', color: '#1f6f68', marginBottom: '8px' }}>
-                Inquiry Received for Design #{design.designNumber}
-              </h3>
-              <p style={{ color: '#555', fontSize: '14.5px', maxWidth: '480px', margin: '0 auto 18px', lineHeight: 1.6 }}>
-                Thank you, <strong>{formData.name || 'Valued Client'}</strong>. Our Brooklyn design team has received your request for <strong>{design.title}</strong> (Format: {format}).
-              </p>
-              <div style={{
-                background: '#faf8f4',
-                border: '1px solid #e0d5c2',
-                borderRadius: '6px',
-                padding: '14px 20px',
-                display: 'inline-block',
-                marginBottom: '24px'
-              }}>
-                <div style={{ fontSize: '12px', color: '#666', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                  Confirmation Reference
-                </div>
-                <div style={{ fontSize: '18px', fontWeight: 700, color: '#1f6f68', letterSpacing: '0.05em' }}>
-                  {confirmationCode}
-                </div>
-              </div>
-              <p style={{ fontSize: '13px', color: '#777', margin: '0 0 24px', lineHeight: 1.5 }}>
-                We will email your quote and proof submission link shortly. Need immediate assistance? Call us directly at <strong>(718) 924-2004</strong>.
-              </p>
-              <button
-                onClick={onClose}
-                className="b b1"
-                style={{ minWidth: '160px' }}
-              >
-                Close &amp; Return to Gallery
-              </button>
+        <div style={{ padding: '22px 26px' }}>
+          <form onSubmit={handleContinueToOrder} style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+            
+            {/* Context Note */}
+            <div style={{
+              background: '#fdfbf7',
+              border: '1px solid #ebd8b5',
+              borderRadius: '6px',
+              padding: '11px 14px',
+              fontSize: '12.5px',
+              color: '#704f12',
+              display: 'flex',
+              gap: '9px',
+              alignItems: 'center'
+            }}>
+              <Sparkles size={16} style={{ flexShrink: 0, color: '#c9963b' }} />
+              <span>
+                Select your program specifications below. These details will automatically transfer into the main order form.
+              </span>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {/* Notice Banner */}
-              <div style={{
-                background: '#fdfbf7',
-                border: '1px solid #ebd8b5',
-                borderRadius: '6px',
-                padding: '12px 16px',
-                fontSize: '12.5px',
-                color: '#704f12',
-                display: 'flex',
-                gap: '10px',
-                alignItems: 'flex-start'
-              }}>
-                <Sparkles size={16} style={{ flexShrink: 0, marginTop: '2px', color: '#c9963b' }} />
-                <span>
-                  <strong>Gallery Order Notice:</strong> This carries <strong>Design #{design.designNumber}</strong> straight to our studio. Because every program is customized to your photos and service order, exact pricing and invoice are quoted based on proof approval. No payment is taken right now.
-                </span>
-              </div>
 
-              {/* 1. Format Selection */}
-              <div>
-                <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: '#262626', marginBottom: '8px' }}>
-                  1. Select Available Format
-                </label>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '8px' }}>
-                  {design.availableFormats.map((fmt) => (
+            {/* 1. Program Format */}
+            <div>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: '#262626', marginBottom: '8px' }}>
+                1. Program Format
+              </label>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '8px' }}>
+                {DEFAULT_FORMATS.map((fmt) => {
+                  const isSelected = format === fmt
+                  return (
                     <button
                       key={fmt}
                       type="button"
                       onClick={() => setFormat(fmt)}
                       style={{
                         padding: '10px 12px',
-                        border: format === fmt ? '2px solid #1f6f68' : '1px solid #ddd',
-                        background: format === fmt ? '#f0f6f5' : '#ffffff',
-                        color: format === fmt ? '#1f6f68' : '#444',
-                        fontWeight: format === fmt ? 700 : 500,
+                        border: isSelected ? '2px solid #1f6f68' : '1px solid #ddd',
+                        background: isSelected ? '#f0f6f5' : '#ffffff',
+                        color: isSelected ? '#1f6f68' : '#444',
+                        fontWeight: isSelected ? 700 : 500,
                         borderRadius: '4px',
                         fontSize: '13px',
                         cursor: 'pointer',
@@ -246,255 +212,222 @@ export default function OrderInquiryModal({
                     >
                       {fmt}
                     </button>
-                  ))}
-                </div>
+                  )
+                })}
               </div>
+            </div>
 
-              {/* 2. Popular Add-ons */}
-              {design.popularAddOns && design.popularAddOns.length > 0 && (
-                <div>
-                  <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: '#262626', marginBottom: '8px' }}>
-                    2. Popular Add-ons (Optional)
-                  </label>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '8px' }}>
-                    {design.popularAddOns.map((addOn) => {
-                      const isSelected = selectedAddOns.includes(addOn)
-                      return (
-                        <div
-                          key={addOn}
-                          onClick={() => handleAddOnToggle(addOn)}
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            padding: '9px 12px',
-                            border: isSelected ? '1px solid #1f6f68' : '1px solid #e3e3e3',
-                            background: isSelected ? '#f5f9f8' : '#ffffff',
-                            borderRadius: '4px',
-                            cursor: 'pointer',
-                            fontSize: '13px',
-                            userSelect: 'none'
-                          }}
-                        >
-                          <div style={{
-                            width: '18px',
-                            height: '18px',
-                            borderRadius: '3px',
-                            border: isSelected ? '1px solid #1f6f68' : '1px solid #bbb',
-                            background: isSelected ? '#1f6f68' : '#fff',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            color: '#fff',
-                            fontSize: '11px'
-                          }}>
-                            {isSelected && <Check size={13} />}
-                          </div>
-                          <span>{addOn}</span>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-              )}
-
-              {/* 3. Customer & Service Details */}
-              <div>
-                <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: '#262626', marginBottom: '10px' }}>
-                  3. Family &amp; Service Contact Details
-                </label>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px' }}>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12px', color: '#555', marginBottom: '4px' }}>
-                      Your Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Sarah Jenkins"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            {/* 2. Program Size */}
+            <div>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: '#262626', marginBottom: '8px' }}>
+                2. Program Size
+              </label>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                {DEFAULT_SIZES.map((sz) => {
+                  const isSelected = size === sz
+                  return (
+                    <button
+                      key={sz}
+                      type="button"
+                      onClick={() => setSize(sz)}
                       style={{
-                        width: '100%',
-                        padding: '10px 12px',
-                        border: '1px solid #cfcfcf',
+                        padding: '11px 14px',
+                        border: isSelected ? '2px solid #1f6f68' : '1px solid #ddd',
+                        background: isSelected ? '#f0f6f5' : '#ffffff',
+                        color: isSelected ? '#1f6f68' : '#444',
+                        fontWeight: isSelected ? 700 : 500,
                         borderRadius: '4px',
-                        fontSize: '13.5px'
-                      }}
-                    />
-                  </div>
-
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12px', color: '#555', marginBottom: '4px' }}>
-                      Phone Number *
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      placeholder="(718) 000-0000"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      style={{
-                        width: '100%',
-                        padding: '10px 12px',
-                        border: '1px solid #cfcfcf',
-                        borderRadius: '4px',
-                        fontSize: '13.5px'
-                      }}
-                    />
-                  </div>
-
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12px', color: '#555', marginBottom: '4px' }}>
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="you@example.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      style={{
-                        width: '100%',
-                        padding: '10px 12px',
-                        border: '1px solid #cfcfcf',
-                        borderRadius: '4px',
-                        fontSize: '13.5px'
-                      }}
-                    />
-                  </div>
-
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12px', color: '#555', marginBottom: '4px' }}>
-                      Name of Loved One *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Eleanor Dawson"
-                      value={formData.lovedOneName}
-                      onChange={(e) => setFormData({ ...formData, lovedOneName: e.target.value })}
-                      style={{
-                        width: '100%',
-                        padding: '10px 12px',
-                        border: '1px solid #cfcfcf',
-                        borderRadius: '4px',
-                        fontSize: '13.5px'
-                      }}
-                    />
-                  </div>
-
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12px', color: '#555', marginBottom: '4px' }}>
-                      Estimated Service Date
-                    </label>
-                    <input
-                      type="date"
-                      value={formData.serviceDate}
-                      onChange={(e) => setFormData({ ...formData, serviceDate: e.target.value })}
-                      style={{
-                        width: '100%',
-                        padding: '10px 12px',
-                        border: '1px solid #cfcfcf',
-                        borderRadius: '4px',
-                        fontSize: '13.5px'
-                      }}
-                    />
-                  </div>
-
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12px', color: '#555', marginBottom: '4px' }}>
-                      Estimated Quantity Needed
-                    </label>
-                    <select
-                      value={formData.quantity}
-                      onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
-                      style={{
-                        width: '100%',
-                        padding: '10px 12px',
-                        border: '1px solid #cfcfcf',
-                        borderRadius: '4px',
-                        fontSize: '13.5px',
-                        background: '#ffffff'
+                        fontSize: '13px',
+                        cursor: 'pointer',
+                        textAlign: 'center',
+                        transition: 'all 0.15s ease'
                       }}
                     >
-                      <option value="50">50 copies</option>
-                      <option value="100">100 copies (Most Common)</option>
-                      <option value="150">150 copies</option>
-                      <option value="200">200 copies</option>
-                      <option value="250">250 copies</option>
-                      <option value="300">300 copies</option>
-                      <option value="500+">500+ copies</option>
-                    </select>
-                  </div>
-                </div>
+                      <div>{sz}</div>
+                      <div style={{ fontSize: '11px', color: '#777', fontWeight: 400, marginTop: '2px' }}>
+                        {sz === 'Standard' ? '8.5" x 11" (Folded to 5.5" x 8.5")' : '8.5" x 14" or 11" x 17" Tabloid'}
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
 
-                <div style={{ marginTop: '12px' }}>
+            {/* 3. Quantity Needed */}
+            <div>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: '#262626', marginBottom: '8px' }}>
+                3. Quantity Needed
+              </label>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(70px, 1fr))', gap: '8px', marginBottom: quantity === '250+' ? '10px' : '0' }}>
+                {DEFAULT_QUANTITIES.map((qty) => {
+                  const isSelected = quantity === qty
+                  return (
+                    <button
+                      key={qty}
+                      type="button"
+                      onClick={() => setQuantity(qty)}
+                      style={{
+                        padding: '9px 10px',
+                        border: isSelected ? '2px solid #1f6f68' : '1px solid #ddd',
+                        background: isSelected ? '#f0f6f5' : '#ffffff',
+                        color: isSelected ? '#1f6f68' : '#444',
+                        fontWeight: isSelected ? 700 : 500,
+                        borderRadius: '4px',
+                        fontSize: '13px',
+                        cursor: 'pointer',
+                        textAlign: 'center',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      {qty}
+                    </button>
+                  )
+                })}
+              </div>
+
+              {quantity === '250+' && (
+                <div style={{ marginTop: '10px' }}>
                   <label style={{ display: 'block', fontSize: '12px', color: '#555', marginBottom: '4px' }}>
-                    Funeral Home / Venue &amp; Special Requests
+                    Specify Exact Quantity Needed (250+) *
                   </label>
-                  <textarea
-                    rows={2}
-                    placeholder="e.g. Service at Grace Chapel Brooklyn. We have 14 photos and an obituary ready to submit."
-                    value={formData.notes}
-                    onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                  <input
+                    type="text"
+                    required={quantity === '250+'}
+                    placeholder="e.g. 300, 400, 500"
+                    value={customQuantity}
+                    onChange={(e) => setCustomQuantity(e.target.value)}
                     style={{
                       width: '100%',
-                      padding: '10px 12px',
+                      padding: '9px 12px',
                       border: '1px solid #cfcfcf',
                       borderRadius: '4px',
-                      fontSize: '13px',
-                      fontFamily: 'inherit'
+                      fontSize: '13px'
                     }}
                   />
                 </div>
-              </div>
+              )}
+            </div>
 
-              {/* Submit Buttons */}
-              <div style={{
-                borderTop: '1px solid #eee',
-                paddingTop: '16px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-                gap: '12px'
-              }}>
-                <button
-                  type="button"
-                  onClick={onClose}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    color: '#666',
-                    cursor: 'pointer',
-                    fontSize: '13px',
-                    textDecoration: 'underline'
-                  }}
-                >
-                  Cancel &amp; Continue Browsing
-                </button>
-
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="b b1"
-                  style={{
-                    padding: '12px 28px',
-                    fontSize: '13px',
-                    fontWeight: 700,
-                    letterSpacing: '0.08em',
-                    boxShadow: '0 4px 14px rgba(31, 111, 104, 0.3)'
-                  }}
-                >
-                  {submitting ? 'Submitting Design Inquiry...' : `Submit Order Request for Design #${design.designNumber}`}
-                </button>
+            {/* 4. Optional Add-ons */}
+            <div>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: '#262626', marginBottom: '8px' }}>
+                4. Optional Add-ons
+              </label>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {DEFAULT_ADDONS.map((addOn) => {
+                  const isSelected = selectedAddOns.includes(addOn)
+                  return (
+                    <div
+                      key={addOn}
+                      onClick={() => handleAddOnToggle(addOn)}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        padding: '10px 14px',
+                        border: isSelected ? '1px solid #1f6f68' : '1px solid #e3e3e3',
+                        background: isSelected ? '#f5f9f8' : '#ffffff',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '13px',
+                        userSelect: 'none',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      <div style={{
+                        width: '18px',
+                        height: '18px',
+                        borderRadius: '3px',
+                        border: isSelected ? '1px solid #1f6f68' : '1px solid #bbb',
+                        background: isSelected ? '#1f6f68' : '#fff',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#fff',
+                        fontSize: '11px',
+                        flexShrink: 0
+                      }}>
+                        {isSelected && <Check size={13} />}
+                      </div>
+                      <span style={{ fontWeight: isSelected ? 600 : 400, color: '#333' }}>
+                        {addOn}
+                      </span>
+                    </div>
+                  )
+                })}
               </div>
-            </form>
-          )}
+            </div>
+
+            {/* 5. Special Requests / Custom Layout */}
+            <div>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: '#262626', marginBottom: '4px' }}>
+                5. Special Requests / Custom Layout
+              </label>
+              <p style={{ fontSize: '11.5px', color: '#666', margin: '0 0 6px', lineHeight: 1.4 }}>
+                For design modifications, unique layouts, personalized elements, or other customization needs. Additional charges may apply depending on the nature of your request.
+              </p>
+              <textarea
+                rows={3}
+                placeholder="Share any special design changes, extra photo collages, custom verses, or layout requests..."
+                value={specialRequests}
+                onChange={(e) => setSpecialRequests(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  border: '1px solid #cfcfcf',
+                  borderRadius: '4px',
+                  fontSize: '13px',
+                  fontFamily: 'inherit',
+                  resize: 'vertical'
+                }}
+              />
+            </div>
+
+            {/* Modal Actions */}
+            <div style={{
+              borderTop: '1px solid #eee',
+              paddingTop: '16px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '12px'
+            }}>
+              <button
+                type="button"
+                onClick={onClose}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#666',
+                  cursor: 'pointer',
+                  fontSize: '13px',
+                  textDecoration: 'underline'
+                }}
+              >
+                Cancel &amp; Return to Design
+              </button>
+
+              <button
+                type="submit"
+                className="b b1"
+                style={{
+                  padding: '13px 28px',
+                  fontSize: '13.5px',
+                  fontWeight: 700,
+                  letterSpacing: '0.08em',
+                  boxShadow: '0 4px 14px rgba(31, 111, 104, 0.3)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+              >
+                Continue to Order <ArrowRight size={15} />
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   )
 }
-

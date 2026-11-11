@@ -33,8 +33,8 @@ export default function Navbar() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px 12px', flexWrap: 'wrap', fontSize: 'clamp(11px, 1.5vw, 12px)' }}>
             <span>Monday–Friday, 10:00am – 6:00pm</span>
             <span style={{ opacity: 0.5 }}>·</span>
-            <a href="tel:7189242004" style={{ color: '#444', fontWeight: 600 }}>
-              (718) 924-2004
+            <a href="tel:9173001104" style={{ color: '#444', fontWeight: 600 }}>
+              (917) 300-1104
             </a>
             <span style={{ opacity: 0.5 }}>·</span>
             <a href="mailto:orders@liliesofthefield.design" style={{ color: '#444' }}>
@@ -117,21 +117,7 @@ export default function Navbar() {
               Home
             </Link>
 
-            <Link 
-              href="/gallery" 
-              style={{
-                color: pathname?.startsWith('/gallery') ? '#1f6f68' : '#262626',
-                borderBottom: pathname?.startsWith('/gallery') ? '2px solid #1f6f68' : 'none',
-                paddingBottom: '4px',
-                fontSize: '14px',
-                fontWeight: pathname?.startsWith('/gallery') ? 600 : 500,
-                whiteSpace: 'nowrap'
-              }}
-            >
-              Gallery
-            </Link>
-
-            {/* Collection Dropdown */}
+            {/* Collection Dropdown - Design Gallery is a subpage under Our Collection */}
             <div 
               style={{ position: 'relative' }}
               onMouseEnter={() => setCollectionOpen(true)}
@@ -140,9 +126,10 @@ export default function Navbar() {
               <button style={{
                 background: 'none',
                 border: 'none',
-                color: pathname?.startsWith('/services') ? '#1f6f68' : '#262626',
+                color: (pathname?.startsWith('/services') || pathname?.startsWith('/gallery')) ? '#1f6f68' : '#262626',
+                borderBottom: (pathname?.startsWith('/services') || pathname?.startsWith('/gallery')) ? '2px solid #1f6f68' : 'none',
                 fontSize: '14px',
-                fontWeight: 500,
+                fontWeight: (pathname?.startsWith('/services') || pathname?.startsWith('/gallery')) ? 600 : 500,
                 fontFamily: 'inherit',
                 cursor: 'pointer',
                 display: 'flex',
@@ -167,7 +154,7 @@ export default function Navbar() {
                   zIndex: 100
                 }}>
                   <Link href="/gallery" style={{ display: 'block', padding: '8px 18px', color: pathname?.startsWith('/gallery') ? '#1f6f68' : '#333', fontWeight: pathname?.startsWith('/gallery') ? 700 : 500, fontSize: '13px', whiteSpace: 'nowrap', background: pathname?.startsWith('/gallery') ? '#f5efe6' : 'transparent' }}>
-                    ✦ Design Gallery &amp; Collections
+                    ✦ Design Gallery
                   </Link>
                   <Link href="/services#programs" style={{ display: 'block', padding: '8px 18px', color: '#333', fontSize: '13px', whiteSpace: 'nowrap' }}>
                     Memorial Programs
@@ -289,7 +276,7 @@ export default function Navbar() {
           {/* Right Action Button & Mobile Toggle */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
             <Link 
-              href="/services#order" 
+              href="/order" 
               className="b bg" 
               style={{
                 padding: 'clamp(8px, 1.5vw, 11px) clamp(12px, 2vw, 22px)',
@@ -339,26 +326,56 @@ export default function Navbar() {
             >
               Home
             </Link>
+            
+            <div style={{ paddingTop: '4px' }}>
+              <div style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#1f6f68', marginBottom: '6px' }}>
+                Our Collection
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', paddingLeft: '8px' }}>
+                <Link 
+                  href="/gallery" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{ fontSize: '14.5px', fontWeight: pathname?.startsWith('/gallery') ? 700 : 600, color: pathname?.startsWith('/gallery') ? '#1f6f68' : '#262626' }}
+                >
+                  ✦ Design Gallery
+                </Link>
+                <Link 
+                  href="/services#programs" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{ fontSize: '14px', color: '#555' }}
+                >
+                  ↳ Memorial Programs
+                </Link>
+                <Link 
+                  href="/services/prayer-cards" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{ fontSize: '14px', color: pathname?.includes('prayer-cards') ? '#1f6f68' : '#555', fontWeight: pathname?.includes('prayer-cards') ? 600 : 400 }}
+                >
+                  ↳ Prayer Cards &amp; Keepsakes
+                </Link>
+                <Link 
+                  href="/services#digital" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{ fontSize: '14px', color: '#555' }}
+                >
+                  ↳ Digital Memorials &amp; QR
+                </Link>
+                <Link 
+                  href="/services#displays" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{ fontSize: '14px', color: '#555' }}
+                >
+                  ↳ Photo &amp; Tribute Products
+                </Link>
+              </div>
+            </div>
+
             <Link 
-              href="/gallery" 
+              href="/order" 
               onClick={() => setMobileMenuOpen(false)}
-              style={{ padding: '6px 0', fontSize: '15px', fontWeight: pathname?.startsWith('/gallery') ? 700 : 600, color: '#1f6f68' }}
+              style={{ padding: '6px 0', fontSize: '15px', fontWeight: 700, color: '#c9963b' }}
             >
-              ✦ Design Gallery &amp; Collections
-            </Link>
-            <Link 
-              href="/services#programs" 
-              onClick={() => setMobileMenuOpen(false)}
-              style={{ padding: '6px 0', fontSize: '15px', color: '#262626' }}
-            >
-              Our Collection
-            </Link>
-            <Link 
-              href="/services/prayer-cards" 
-              onClick={() => setMobileMenuOpen(false)}
-              style={{ padding: '4px 0 4px 14px', fontSize: '14px', color: pathname?.includes('prayer-cards') ? '#1f6f68' : '#555', fontWeight: pathname?.includes('prayer-cards') ? 600 : 400 }}
-            >
-              ↳ Prayer Cards &amp; Keepsakes
+              Place an Order
             </Link>
             <Link 
               href="/memorials" 

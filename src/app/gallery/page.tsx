@@ -101,7 +101,7 @@ export default function GalleryPage() {
             maxWidth: '760px',
             margin: '0 auto 24px'
           }}>
-            A dedicated visual gallery for families and funeral homes to browse by collection, examine designs flat inside and out, and request tailored print orders. This is a gallery, not a store: pricing is quoted per order to accommodate your family’s exact format, quantity, and turnaround.
+            A dedicated visual gallery for families and funeral homes to explore our design collections, examine programs flat inside and out, and request tailored print orders. This is a gallery, not a store: pricing is quoted per order to accommodate your family’s exact format, quantity, and turnaround.
           </p>
 
           <div style={{
@@ -119,41 +119,44 @@ export default function GalleryPage() {
             boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
           }}>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-              <CheckCircle2 size={14} color="#1f6f68" /> Shown Flat (Front Cover &amp; Inside Spread)
+              <CheckCircle2 size={14} color="#1f6f68" /> Shown Flat (Front Cover, Inside Spread &amp; Back Cover)
             </span>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
               <CheckCircle2 size={14} color="#1f6f68" /> Sample Layouts (Fully Customizable)
             </span>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-              <CheckCircle2 size={14} color="#1f6f68" /> Quoted Per Order — Direct Studio Support
+              <CheckCircle2 size={14} color="#1f6f68" /> Direct Studio Support: (917) 300-1104
             </span>
           </div>
         </div>
       </section>
 
-      {/* 2. Page 1 — Six Collection Tiles Grid */}
+      {/* 2. Explore our Design Collections Grid */}
       <section className="section-padding" style={{ width: '100%', background: '#ffffff' }}>
         <div className="site-container">
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-end',
-            marginBottom: '28px',
+            marginBottom: '32px',
             flexWrap: 'wrap',
-            gap: '12px'
+            gap: '14px'
           }}>
             <div>
-              <div className="eb">Browse By Theme</div>
-              <h2 className="s" style={{ fontSize: 'clamp(24px, 3vw, 32px)', color: '#262626', margin: 0 }}>
-                Six Signature Collections
+              <div className="eb">Our Design Catalog</div>
+              <h2 className="s" style={{ fontSize: 'clamp(26px, 3.2vw, 36px)', color: '#262626', margin: '0 0 6px' }}>
+                Explore our Design Collections
               </h2>
+              <p style={{ fontSize: '14px', color: '#666', margin: 0, maxWidth: '640px' }}>
+                Browse primary collections and searchable themes below. Select any category tile to examine its artwork and filter matching memorial program designs.
+              </p>
             </div>
-            <p style={{ fontSize: '13.5px', color: '#666', margin: 0, maxWidth: '420px' }}>
-              Select any collection tile to filter designs or view each program’s flat cover and open inside spread.
-            </p>
+            <div style={{ fontSize: '13px', color: '#1f6f68', fontWeight: 600 }}>
+              {GALLERY_COLLECTIONS.length} Design Collections Available
+            </div>
           </div>
 
-          {/* 3-Column Tile Grid matching mockup */}
+          {/* 3-Column Tile Grid */}
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
@@ -189,7 +192,7 @@ export default function GalleryPage() {
                     e.currentTarget.style.borderColor = '#e8dfd2'
                   }}
                 >
-                  {/* Cover Design - Flat View Container */}
+                  {/* Clean Artwork Focus Container (repeated label removed) */}
                   <div style={{
                     background: '#f2ece1',
                     padding: '24px 20px',
@@ -198,41 +201,29 @@ export default function GalleryPage() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     borderBottom: '1px solid #e8dfd2',
-                    position: 'relative'
+                    position: 'relative',
+                    minHeight: '260px'
                   }}>
-                    <div style={{
-                      position: 'absolute',
-                      top: '12px',
-                      left: '12px',
-                      fontSize: '10px',
-                      fontWeight: 700,
-                      letterSpacing: '0.12em',
-                      textTransform: 'uppercase',
-                      color: '#777',
-                      background: 'rgba(255,255,255,0.85)',
-                      padding: '3px 8px',
-                      borderRadius: '2px'
-                    }}>
-                      COVER DESIGN — FLAT VIEW
-                    </div>
-
-                    <div style={{
-                      position: 'absolute',
-                      top: '12px',
-                      right: '12px',
-                      fontSize: '11px',
-                      color: '#1f6f68',
-                      fontWeight: 700,
-                      background: '#dfe9e5',
-                      padding: '3px 8px',
-                      borderRadius: '12px'
-                    }}>
-                      {count} {count === 1 ? 'Design' : 'Designs'}
-                    </div>
-
-                    {matchingDesign && (
-                      <div style={{ width: '180px', marginTop: '16px' }}>
+                    {matchingDesign ? (
+                      <div style={{ width: '180px' }}>
                         <CoverFlatView design={matchingDesign} showLabel={false} />
+                      </div>
+                    ) : (
+                      <div style={{
+                        width: '180px',
+                        aspectRatio: '1 / 1.414',
+                        background: '#ffffff',
+                        border: '1px solid #dcd3c4',
+                        borderRadius: '3px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#888',
+                        fontSize: '12px',
+                        padding: '16px',
+                        textAlign: 'center'
+                      }}>
+                        {col.name}
                       </div>
                     )}
                   </div>
@@ -240,37 +231,78 @@ export default function GalleryPage() {
                   {/* Tile Information */}
                   <div style={{ padding: '22px 24px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                     <div>
+                      {/* Bold Category Name */}
                       <h3 className="s" style={{
                         fontSize: '21px',
-                        fontWeight: 600,
+                        fontWeight: 700,
                         color: '#262626',
-                        margin: '0 0 6px'
+                        margin: '0 0 8px'
                       }}>
                         {col.name}
                       </h3>
+
+                      {/* Description */}
                       <p style={{
                         fontSize: '13.5px',
                         color: '#555',
-                        margin: '0 0 16px',
+                        margin: '0 0 12px',
                         lineHeight: 1.5
                       }}>
                         {col.description}
                       </p>
+
+                      {/* Themes & Design Possibilities */}
+                      <div style={{
+                        background: 'rgba(31, 111, 104, 0.05)',
+                        border: '1px solid rgba(31, 111, 104, 0.12)',
+                        borderRadius: '4px',
+                        padding: '10px 12px',
+                        marginBottom: '16px'
+                      }}>
+                        <div style={{
+                          fontSize: '10.5px',
+                          fontWeight: 700,
+                          letterSpacing: '0.08em',
+                          textTransform: 'uppercase',
+                          color: '#1f6f68',
+                          marginBottom: '3px'
+                        }}>
+                          Themes &amp; Design Possibilities
+                        </div>
+                        <div style={{
+                          fontSize: '12px',
+                          color: '#444',
+                          lineHeight: 1.45
+                        }}>
+                          {col.themes}
+                        </div>
+                      </div>
                     </div>
 
                     <div style={{
-                      display: 'inline-flex',
+                      display: 'flex',
                       alignItems: 'center',
-                      gap: '5px',
-                      fontSize: '12px',
-                      fontWeight: 700,
-                      letterSpacing: '0.1em',
-                      textTransform: 'uppercase',
-                      color: '#1f6f68',
+                      justifyContent: 'space-between',
                       borderTop: '1px solid #ebd8b5',
                       paddingTop: '12px'
                     }}>
-                      VIEW DESIGNS &gt;
+                      <span style={{
+                        fontSize: '12px',
+                        fontWeight: 700,
+                        letterSpacing: '0.1em',
+                        textTransform: 'uppercase',
+                        color: '#1f6f68',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px'
+                      }}>
+                        VIEW DESIGNS &gt;
+                      </span>
+                      {count > 0 && (
+                        <span style={{ fontSize: '11.5px', color: '#777' }}>
+                          {count} {count === 1 ? 'Design' : 'Designs'}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -298,7 +330,7 @@ export default function GalleryPage() {
               Explore Available Program Designs
             </h2>
             <p style={{ fontSize: '14.5px', color: '#555', margin: 0, lineHeight: 1.6 }}>
-              Click any design to view its <strong>front cover beside its open inside spread (Sample Layout)</strong>, examine available formats, and carry its design number directly into your order request.
+              Click any design to view its <strong>front cover, open inside spread, and back cover</strong>, examine available formats, and carry its specifications straight into your order form.
             </p>
           </div>
 
@@ -328,7 +360,7 @@ export default function GalleryPage() {
               />
               <input
                 type="text"
-                placeholder="Search by design number (e.g. 101), title, or collection..."
+                placeholder="Search by design number, theme (e.g. basketball, FDNY, lilies, gold, subway), or category..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 style={{
@@ -367,7 +399,7 @@ export default function GalleryPage() {
               flexWrap: 'wrap'
             }}>
               <span style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#666', marginRight: '4px' }}>
-                Collection:
+                Collection Filter:
               </span>
 
               <button
@@ -406,7 +438,7 @@ export default function GalleryPage() {
                       transition: 'all 0.15s ease'
                     }}
                   >
-                    {c.name} ({count})
+                    {c.name} {count > 0 ? `(${count})` : ''}
                   </button>
                 )
               })}
@@ -480,7 +512,7 @@ export default function GalleryPage() {
                     transition: 'all 0.2s ease'
                   }}
                 >
-                  {/* Flat Cover Preview */}
+                  {/* Clean Flat Cover Preview (repeated label removed) */}
                   <div style={{
                     background: '#faf8f4',
                     padding: '24px 20px 16px',
@@ -587,7 +619,7 @@ export default function GalleryPage() {
                           gap: '6px'
                         }}
                       >
-                        <Eye size={14} /> View Inside Spread
+                        <Eye size={14} /> View Previews
                       </Link>
 
                       <button
@@ -611,7 +643,7 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* 4. Flipbook "View Full Catalog" Section (as specified in client prompt) */}
+      {/* 4. Flipbook "View Full Catalog" Section */}
       <section style={{
         width: '100%',
         background: '#ffffff',
@@ -672,7 +704,7 @@ export default function GalleryPage() {
               maxWidth: '640px',
               margin: '0 0 24px'
             }}>
-              You can explore our complete print catalog as a digital flipbook or request printed catalog swatches delivered directly to your funeral home or chapel.
+              You can explore our complete print catalog as a digital flipbook or request printed catalog swatches delivered directly to your funeral home or chapel. Questions? Call our studio directly at (917) 300-1104.
             </p>
 
             <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -767,7 +799,7 @@ export default function GalleryPage() {
               Lilies of the Field Memorial Catalog (Edition 2026)
             </h3>
             <p style={{ fontSize: '14px', color: '#666', maxWidth: '620px', margin: '0 auto 24px' }}>
-              Full digital flipbook with all 6 collections, paper weights, lamination specs, and order instructions.
+              Full digital flipbook with all collections, paper weights, lamination specs, and order instructions.
             </p>
 
             <div style={{
@@ -800,7 +832,7 @@ export default function GalleryPage() {
         </div>
       )}
 
-      {/* Order Inquiry Modal */}
+      {/* Order Inquiry Modal (Specifications & Transfer to Order Form) */}
       <OrderInquiryModal
         isOpen={!!orderModalDesign}
         onClose={() => setOrderModalDesign(null)}
@@ -809,4 +841,3 @@ export default function GalleryPage() {
     </div>
   )
 }
-

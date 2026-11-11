@@ -3,9 +3,11 @@ export interface GalleryCollection {
   slug: string
   name: string
   description: string
-  coverDesignNumber: string
+  themes: string
+  coverDesignNumber?: string
   coverImage?: string
   accentColor?: string
+  isPrimary?: boolean
 }
 
 export interface GalleryDesign {
@@ -24,333 +26,630 @@ export interface GalleryDesign {
   isFeatured?: boolean
 }
 
+export const DEFAULT_FORMATS = [
+  '4-Page',
+  '6-Page',
+  '8-Page Booklet',
+  'Trifold'
+]
+
+export const DEFAULT_SIZES = [
+  'Standard',
+  'Large / Premium'
+]
+
+export const DEFAULT_QUANTITIES = [
+  '50',
+  '75',
+  '100',
+  '150',
+  '200',
+  '250',
+  '250+'
+]
+
+export const DEFAULT_ADDONS = [
+  'Photo Collage Insert',
+  'Digital Program + QR Code',
+  'Additional Pages'
+]
+
 export const GALLERY_COLLECTIONS: GalleryCollection[] = [
   {
-    id: 'signature',
-    slug: 'signature',
-    name: 'Signature Collection',
-    description: 'Our classic, most-loved program designs.',
+    id: 'classic-timeless',
+    slug: 'classic-timeless',
+    name: 'Classic & Timeless',
+    description: 'Traditional layouts, sophisticated borders, elegant typography, and neutral colors honoring a life of enduring grace.',
+    themes: 'Traditional layouts, sophisticated borders, elegant typography, neutral colors',
     coverDesignNumber: '101',
-    coverImage: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
-    accentColor: '#1f6f68'
+    coverImage: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#1f6f68',
+    isPrimary: true
   },
   {
-    id: 'prestige',
-    slug: 'prestige',
-    name: 'Prestige Collection',
-    description: 'Elegant, premium-look designs.',
+    id: 'prestige-luxury',
+    slug: 'prestige-luxury',
+    name: 'Prestige & Luxury',
+    description: 'Gold, silver, marble, pearls, black and gold, royal purple, and regal designs for an elevated presentation.',
+    themes: 'Gold, silver, marble, pearls, black and gold, royal purple, regal designs',
     coverDesignNumber: '201',
     coverImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
-    accentColor: '#c9963b'
+    accentColor: '#c9963b',
+    isPrimary: true
   },
   {
-    id: 'religious',
-    slug: 'religious',
-    name: 'Religious',
-    description: 'Faith-based designs and scripture themes.',
+    id: 'inspirational-spiritual',
+    slug: 'inspirational-spiritual',
+    name: 'Inspirational & Spiritual',
+    description: 'Heavenly skies, angel wings, gates of heaven, stairways, doves, light, inspirational quotes, and faith traditions.',
+    themes: 'Heavenly skies, angel wings, gates of heaven, stairways, doves, light, inspirational quotes and faith traditions',
     coverDesignNumber: '301',
     coverImage: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80',
-    accentColor: '#2b5876'
+    accentColor: '#2b5876',
+    isPrimary: true
+  },
+  {
+    id: 'floral-botanical',
+    slug: 'floral-botanical',
+    name: 'Floral & Botanical',
+    description: 'Roses, lilies, sunflowers, orchids, cherry blossoms, tropical flowers, and lush garden arrangements.',
+    themes: 'Roses, lilies, sunflowers, orchids, cherry blossoms, tropical flowers, garden arrangements',
+    coverDesignNumber: '401',
+    coverImage: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#7b5876',
+    isPrimary: true
+  },
+  {
+    id: 'nature-scenic',
+    slug: 'nature-scenic',
+    name: 'Nature & Scenic',
+    description: 'Mountains, waterfalls, sunsets, forests, meadows, rivers, lakes, and breathtaking autumn landscapes.',
+    themes: 'Mountains, waterfalls, sunsets, forests, meadows, rivers, lakes, autumn landscapes',
+    coverDesignNumber: '501',
+    coverImage: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#2e6f40',
+    isPrimary: true
+  },
+  {
+    id: 'butterflies-birds',
+    slug: 'butterflies-birds',
+    name: 'Butterflies & Birds',
+    description: 'Monarch butterflies, hummingbirds, cardinals, white doves, and graceful birds in peaceful flight.',
+    themes: 'Monarch butterflies, hummingbirds, cardinals, white doves, birds in flight',
+    coverDesignNumber: '601',
+    coverImage: 'https://images.unsplash.com/photo-1535083783855-76ae62b2914e?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#3d7b80',
+    isPrimary: true
+  },
+  {
+    id: 'sports-athletics',
+    slug: 'sports-athletics',
+    name: 'Sports & Athletics',
+    description: 'Basketball, football, baseball, soccer, tennis, golf, boxing, swimming, track, and bowling tributes.',
+    themes: 'Basketball, football, baseball, soccer, tennis, golf, boxing, swimming, track, bowling',
+    coverDesignNumber: '701',
+    coverImage: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#c44536'
+  },
+  {
+    id: 'military-veterans',
+    slug: 'military-veterans',
+    name: 'Military & Veterans',
+    description: 'Army, Navy, Air Force, Marines, Coast Guard, Space Force, and patriotic tributes honoring service to nation.',
+    themes: 'Army, Navy, Air Force, Marines, Coast Guard, Space Force, patriotic tributes',
+    coverDesignNumber: '801',
+    coverImage: 'https://images.unsplash.com/photo-1579975097566-b251bc5d918c?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#1d3557'
+  },
+  {
+    id: 'first-responders',
+    slug: 'first-responders',
+    name: 'First Responders & Public Service',
+    description: 'Dedicated memorials for NYPD, FDNY, EMS, corrections, 911 dispatchers, and emergency personnel.',
+    themes: 'NYPD, FDNY, EMS, corrections, dispatchers, emergency personnel',
+    coverDesignNumber: '802',
+    coverImage: 'https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#9b2226'
+  },
+  {
+    id: 'nyc-places',
+    slug: 'nyc-places',
+    name: 'NYC Places of Interest',
+    description: 'NYC skyline, Brooklyn Bridge, Manhattan, Queens, Bronx, Harlem, Staten Island, and subway-inspired designs.',
+    themes: 'NYC skyline, Brooklyn Bridge, Manhattan, Queens, Bronx, Harlem, Staten Island, subway-inspired designs',
+    coverDesignNumber: '901',
+    coverImage: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#2b2d42'
   },
   {
     id: 'hobbies-interests',
     slug: 'hobbies-interests',
     name: 'Hobbies & Interests',
-    description: 'Designs that reflect a life and its passions.',
-    coverDesignNumber: '401',
-    coverImage: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
+    description: 'Fishing, gardening, cooking, sewing, crafting, reading, chess, photography, and dancing.',
+    themes: 'Fishing, gardening, cooking, sewing, crafting, reading, chess, photography, dancing',
+    coverDesignNumber: '1001',
+    coverImage: 'https://images.unsplash.com/photo-1522881177606-43d25624957b?auto=format&fit=crop&w=800&q=80',
     accentColor: '#5c4d3c'
   },
   {
-    id: 'youth',
-    slug: 'youth',
-    name: 'Youth',
-    description: 'Designs for children and young lives.',
-    coverDesignNumber: '501',
-    coverImage: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=800&q=80',
+    id: 'music-entertainment',
+    slug: 'music-entertainment',
+    name: 'Music & Entertainment',
+    description: 'Gospel, jazz, R&B, hip-hop, instruments, microphones, vinyl records, theater, and entertainment.',
+    themes: 'Gospel, jazz, R&B, hip-hop, instruments, microphones, vinyl records, theater, entertainment',
+    coverDesignNumber: '1101',
+    coverImage: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#7209b7'
+  },
+  {
+    id: 'children-youth',
+    slug: 'children-youth',
+    name: 'Children & Youth',
+    description: 'Soft clouds, stars, rainbows, teddy bears, butterflies, and age-appropriate personalized themes.',
+    themes: 'Soft clouds, stars, rainbows, teddy bears, butterflies, age-appropriate personalized themes',
+    coverDesignNumber: '1201',
+    coverImage: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
     accentColor: '#6b8299'
   },
   {
-    id: 'floral',
-    slug: 'floral',
-    name: 'Floral',
-    description: 'Garden and floral designs.',
-    coverDesignNumber: '601',
-    coverImage: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=800&q=80',
-    accentColor: '#7b5876'
+    id: 'cultural-heritage',
+    slug: 'cultural-heritage',
+    name: 'Cultural & Heritage',
+    description: 'African heritage, Caribbean culture, Latin American heritage, cultural patterns, and family traditions.',
+    themes: 'African heritage, Caribbean culture, Latin American heritage, cultural patterns, family traditions',
+    coverDesignNumber: '1301',
+    coverImage: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#8f4f1d'
+  },
+  {
+    id: 'modern-minimalist',
+    slug: 'modern-minimalist',
+    name: 'Modern & Minimalist',
+    description: 'Clean typography, contemporary layouts, black and white, monochrome, and simple geometric accents.',
+    themes: 'Clean typography, contemporary layouts, black and white, monochrome, simple geometric accents',
+    coverDesignNumber: '1401',
+    coverImage: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#2b2b2b'
+  },
+  {
+    id: 'vintage-retro',
+    slug: 'vintage-retro',
+    name: 'Vintage & Retro',
+    description: 'Antique gold, nostalgic photographs, vintage florals, old-fashioned typography, and sepia backgrounds.',
+    themes: 'Antique gold, nostalgic photographs, vintage florals, old-fashioned typography, sepia backgrounds',
+    coverDesignNumber: '1501',
+    coverImage: 'https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#8a6240'
+  },
+  {
+    id: 'royalty-regal',
+    slug: 'royalty-regal',
+    name: 'Royalty & Regal',
+    description: 'Crowns, pearls, gold and diamond accents, fashion, and regal glamour.',
+    themes: 'Crowns, pearls, gold and diamond accents, fashion & glamour',
+    coverDesignNumber: '1601',
+    coverImage: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#581845'
+  },
+  {
+    id: 'automotive-transportation',
+    slug: 'automotive-transportation',
+    name: 'Automotive & Transportation',
+    description: 'Classic cars, motorcycles, trucks, trains, aviation, and automobile enthusiasts.',
+    themes: 'Classic cars, motorcycles, trucks, trains, aviation, automobile enthusiasts',
+    coverDesignNumber: '1701',
+    coverImage: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#344e41'
+  },
+  {
+    id: 'travel-destinations',
+    slug: 'travel-destinations',
+    name: 'Travel & Destinations',
+    description: 'Maps, passports, world landmarks, favorite cities, and vacation destinations.',
+    themes: 'Maps, passports, world landmarks, favorite cities, vacation destinations',
+    coverDesignNumber: '1801',
+    coverImage: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#2a9d8f'
+  },
+  {
+    id: 'careers-professions',
+    slug: 'careers-professions',
+    name: 'Careers & Professions',
+    description: 'Teachers, nurses, doctors, chefs, barbers, entrepreneurs, clergy, and educators.',
+    themes: 'Teachers, nurses, doctors, chefs, barbers, entrepreneurs, clergy, educators',
+    coverDesignNumber: '1901',
+    coverImage: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#1d3557'
+  },
+  {
+    id: 'fraternal-community',
+    slug: 'fraternal-community',
+    name: 'Fraternal & Community Organizations',
+    description: 'Masonic-inspired themes, Eastern Star, Greek-letter organizations, civic groups, and community service.',
+    themes: 'Masonic-inspired themes, Eastern Star, Greek-letter organizations, civic groups, community service',
+    coverDesignNumber: '2001',
+    coverImage: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#1a365d'
+  },
+  {
+    id: 'patriotic',
+    slug: 'patriotic',
+    name: 'Patriotic',
+    description: 'Flags, national themes, and pride in service to country.',
+    themes: 'Flags, national themes and pride, service to country',
+    coverDesignNumber: '2101',
+    coverImage: 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#b7094c'
+  },
+  {
+    id: 'seasonal-holiday',
+    slug: 'seasonal-holiday',
+    name: 'Seasonal & Holiday Inspired',
+    description: 'Spring blossoms, summer landscapes, autumn foliage, winter snowflakes, and Christmas-inspired elements.',
+    themes: 'Spring blossoms, summer landscapes, autumn foliage, winter snowflakes, Christmas-inspired elements',
+    coverDesignNumber: '2201',
+    coverImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#bc6c25'
+  },
+  {
+    id: 'custom-personalized',
+    slug: 'custom-personalized',
+    name: 'Custom & Personalized',
+    description: 'Photo collages, custom backgrounds, meaningful locations, and completely unique themes.',
+    themes: 'Photo collages, custom backgrounds, meaningful locations, unique themes',
+    coverDesignNumber: '2301',
+    coverImage: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=800&q=80',
+    accentColor: '#1f6f68'
   }
 ]
 
-export const DEFAULT_FORMATS = [
-  '4-page Bi-Fold',
-  '6-page Tri-Fold',
-  '8-page Booklet',
-  'Trifold'
-]
-
-export const DEFAULT_ADDONS = [
-  'Photo collage insert',
-  'Digital program + QR code',
-  'Prayer cards',
-  'Bookmarks'
-]
-
 export const GALLERY_DESIGNS: GalleryDesign[] = [
-  // Signature Collection
+  // Classic & Timeless
   {
     id: 'golden-sunrise',
     designNumber: '101',
     title: 'Golden Sunrise',
-    collectionId: 'signature',
-    collectionName: 'Signature Collection',
+    collectionId: 'classic-timeless',
+    collectionName: 'Classic & Timeless',
     description: 'A radiant morning dawn with soft golden accents and warm horizon hues symbolizing hope, remembrance, and the dawn of everlasting peace.',
     theme: 'Warm Sunrise & Golden Rays',
     coverImage: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80',
     insideSpreadImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Sunrise', 'Golden', 'Hope', 'Classic'],
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Classic & Timeless', 'Traditional', 'Sunrise', 'Golden', 'Neutral colors', 'Borders'],
     isFeatured: true
   },
   {
     id: 'timeless-grace',
     designNumber: '102',
     title: 'Timeless Grace',
-    collectionId: 'signature',
-    collectionName: 'Signature Collection',
+    collectionId: 'classic-timeless',
+    collectionName: 'Classic & Timeless',
     description: 'Understated elegance featuring subtle parchment textures, delicate serif typesetting, and dignified charcoal border detailing.',
     theme: 'Subtle Parchment & Fine Line Art',
     coverImage: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1000&q=80',
     insideSpreadImage: 'https://images.unsplash.com/photo-1518655048521-f130df041f66?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Minimalist', 'Timeless', 'Dignified', 'Clean'],
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Classic & Timeless', 'Parchment', 'Serif', 'Traditional layouts', 'Neutral colors'],
     isFeatured: true
   },
   {
     id: 'serenity-blue',
     designNumber: '103',
     title: 'Serenity Blue',
-    collectionId: 'signature',
-    collectionName: 'Signature Collection',
+    collectionId: 'classic-timeless',
+    collectionName: 'Classic & Timeless',
     description: 'Peaceful sky tones layered with gentle cloud gradients and silver foil-effect accents for a deeply calming service tone.',
     theme: 'Azure Clouds & Silver Harmony',
     coverImage: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1000&q=80',
     insideSpreadImage: 'https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Blue', 'Sky', 'Clouds', 'Peaceful']
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Classic & Timeless', 'Blue', 'Sky', 'Clouds', 'Peaceful']
   },
 
-  // Prestige Collection
+  // Prestige & Luxury
   {
     id: 'regal-onyx-gold',
     designNumber: '201',
     title: 'Regal Onyx & Gold',
-    collectionId: 'prestige',
-    collectionName: 'Prestige Collection',
+    collectionId: 'prestige-luxury',
+    collectionName: 'Prestige & Luxury',
     description: 'A striking luxury presentation with rich midnight black backdrop, gilded geometric flourishes, and regal gold leaf typography styling.',
     theme: 'Luxury Onyx & Burnished Gold',
     coverImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1000&q=80',
     insideSpreadImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Luxury', 'Onyx', 'Gold', 'Prestige'],
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Prestige & Luxury', 'Gold', 'Black and gold', 'Regal designs', 'Marble', 'Luxury'],
     isFeatured: true
   },
   {
     id: 'pearl-velvet',
     designNumber: '202',
-    title: 'Embossed Pearl & Velvet',
-    collectionId: 'prestige',
-    collectionName: 'Prestige Collection',
+    title: 'Embossed Pearl & Champagne',
+    collectionId: 'prestige-luxury',
+    collectionName: 'Prestige & Luxury',
     description: 'Creamy ivory pearlescent finish accented by warm champagne borders, debossed texture effect, and refined traditional hierarchy.',
     theme: 'Pearl Ivory & Champagne Gold',
     coverImage: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=1000&q=80',
     insideSpreadImage: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Pearl', 'Ivory', 'Champagne', 'Aristocratic']
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Prestige & Luxury', 'Pearls', 'Silver', 'Champagne', 'Luxury']
   },
   {
     id: 'imperial-burgundy',
     designNumber: '203',
-    title: 'Imperial Burgundy',
-    collectionId: 'prestige',
-    collectionName: 'Prestige Collection',
-    description: 'Deep royal crimson damask patterning framed with ornate gilded scrollwork, conveying lasting honor and dignified grandeur.',
-    theme: 'Damask Scrollwork & Wine Velvet',
+    title: 'Royal Purple & Gold Brocade',
+    collectionId: 'prestige-luxury',
+    collectionName: 'Prestige & Luxury',
+    description: 'Deep royal purple and velvet patterning framed with ornate gilded scrollwork, conveying lasting honor and dignified grandeur.',
+    theme: 'Damask Scrollwork & Royal Purple',
     coverImage: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1000&q=80',
     insideSpreadImage: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Burgundy', 'Crimson', 'Gold', 'Formal']
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Prestige & Luxury', 'Royal purple', 'Gold', 'Regal designs']
   },
 
-  // Religious Collection
+  // Inspirational & Spiritual
   {
     id: 'heavenly-ascent',
     designNumber: '301',
-    title: 'Heavenly Ascent & Cross',
-    collectionId: 'religious',
-    collectionName: 'Religious',
-    description: 'A sacred golden cross illuminated by radiant beams penetrating celestial clouds, created for Christian, Catholic, and faith services.',
-    theme: 'Illuminated Cross & Celestial Sunbeams',
+    title: 'Heavenly Skies & Angel Wings',
+    collectionId: 'inspirational-spiritual',
+    collectionName: 'Inspirational & Spiritual',
+    description: 'Illuminated beams penetrating celestial skies with ethereal angel wings, created for faith traditions and sacred celebrations.',
+    theme: 'Gates of Heaven, Light & Angel Wings',
     coverImage: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1000&q=80',
     insideSpreadImage: 'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Faith', 'Cross', 'Scripture', 'Christian'],
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Inspirational & Spiritual', 'Heavenly skies', 'Angel wings', 'Gates of heaven', 'Light', 'Faith traditions'],
     isFeatured: true
   },
   {
-    id: 'psalm-23-shepherd',
+    id: 'white-dove-stairway',
     designNumber: '302',
-    title: 'Psalm 23 Green Pastures',
-    collectionId: 'religious',
-    collectionName: 'Religious',
-    description: 'Inspiring pastoral meadows and tranquil still waters inspired by the 23rd Psalm: “He leads me beside the still waters; He restores my soul.”',
-    theme: 'Still Waters & Pastoral Valley',
+    title: 'Stairway to Heaven & Doves',
+    collectionId: 'inspirational-spiritual',
+    collectionName: 'Inspirational & Spiritual',
+    description: 'Golden stairway ascending into divine light with soaring white doves in flight and comforting scriptural verses.',
+    theme: 'Stairways, Doves & Divine Light',
     coverImage: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1000&q=80',
     insideSpreadImage: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Psalm 23', 'Nature', 'Still Waters', 'Faith']
-  },
-  {
-    id: 'everlasting-light',
-    designNumber: '303',
-    title: 'Everlasting Light',
-    collectionId: 'religious',
-    collectionName: 'Religious',
-    description: 'Warm altar candle glow surrounded by subtle olive branch flourishes, honoring the soul’s journey into God’s eternal presence.',
-    theme: 'Altar Candle Glow & Olive Branch',
-    coverImage: 'https://images.unsplash.com/photo-1513297887119-d46091b24bfa?auto=format&fit=crop&w=1000&q=80',
-    insideSpreadImage: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Candle', 'Altar', 'Light', 'Spiritual']
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Inspirational & Spiritual', 'Doves', 'Stairways', 'Heaven', 'Inspirational quotes']
   },
 
-  // Hobbies & Interests Collection
-  {
-    id: 'master-musician',
-    designNumber: '401',
-    title: 'Master Musician & Melody',
-    collectionId: 'hobbies-interests',
-    collectionName: 'Hobbies & Interests',
-    description: 'A harmonious tribute featuring vintage musical score notation, piano keys motif, and warm sepia tones for lovers of song and symphony.',
-    theme: 'Musical Staff & Vintage Acoustic Soul',
-    coverImage: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80',
-    insideSpreadImage: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Music', 'Piano', 'Melody', 'Artist'],
-    isFeatured: true
-  },
-  {
-    id: 'autumn-sportsman',
-    designNumber: '402',
-    title: 'Autumn Woods & Sportsman',
-    collectionId: 'hobbies-interests',
-    collectionName: 'Hobbies & Interests',
-    description: 'Crisp mountain wilderness, evergreen pines, and warm cedar wood grain celebrating outdoorsmen, anglers, campers, and nature enthusiasts.',
-    theme: 'Mountain Wilderness & Cedar Woodgrain',
-    coverImage: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1000&q=80',
-    insideSpreadImage: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Outdoors', 'Nature', 'Woodland', 'Fishing']
-  },
-  {
-    id: 'ocean-mariner',
-    designNumber: '403',
-    title: 'Ocean Mariner & Lighthouse',
-    collectionId: 'hobbies-interests',
-    collectionName: 'Hobbies & Interests',
-    description: 'A peaceful coastal seascape and guiding nautical beacon celebrating sailors, coastal souls, and veterans of the sea.',
-    theme: 'Ocean Tide & Coastal Lighthouse',
-    coverImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80',
-    insideSpreadImage: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Ocean', 'Nautical', 'Sea', 'Lighthouse']
-  },
-
-  // Youth Collection
-  {
-    id: 'sweet-butterfly-dreams',
-    designNumber: '501',
-    title: 'Sweet Butterfly Dreams',
-    collectionId: 'youth',
-    collectionName: 'Youth',
-    description: 'Delicate pastel watercolor butterflies rising toward tender skies, capturing innocence, eternal gentleness, and everlasting young love.',
-    theme: 'Pastel Watercolor & Flying Butterflies',
-    coverImage: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1000&q=80',
-    insideSpreadImage: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Youth', 'Butterflies', 'Pastel', 'Gentle'],
-    isFeatured: true
-  },
-  {
-    id: 'starlight-reverie',
-    designNumber: '502',
-    title: 'Starlight Reverie & Teddy',
-    collectionId: 'youth',
-    collectionName: 'Youth',
-    description: 'Soft celestial nursery clouds, shimmering silver stars, and gentle moonlit glow created to wrap young departures in warmth and grace.',
-    theme: 'Silver Constellations & Fluffy Clouds',
-    coverImage: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1000&q=80',
-    insideSpreadImage: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Youth', 'Stars', 'Clouds', 'Angel']
-  },
-
-  // Floral Collection
+  // Floral & Botanical
   {
     id: 'white-lilies-sanctuary',
-    designNumber: '601',
+    designNumber: '401',
     title: 'White Lilies & Botanical Greens',
-    collectionId: 'floral',
-    collectionName: 'Floral',
+    collectionId: 'floral-botanical',
+    collectionName: 'Floral & Botanical',
     description: 'The signature namesake of Lilies of the Field: fresh white oriental lilies, eucalyptus leaves, and crisp botanical line art.',
     theme: 'Pure White Lilies & Silver Eucalyptus',
     coverImage: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1000&q=80',
     insideSpreadImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Lilies', 'White', 'Botanical', 'Floral'],
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Floral & Botanical', 'Lilies', 'Roses', 'Orchids', 'Garden arrangements'],
     isFeatured: true
   },
   {
     id: 'blush-garden-roses',
-    designNumber: '602',
-    title: 'Soft Blush Garden Roses',
-    collectionId: 'floral',
-    collectionName: 'Floral',
-    description: 'Romantic vintage dusty roses interwoven with soft olive sprigs and creamy antique lace texture, honoring a life filled with loving warmth.',
-    theme: 'Blush Roses & Antique Cream Border',
+    designNumber: '402',
+    title: 'Soft Blush Roses & Cherry Blossoms',
+    collectionId: 'floral-botanical',
+    collectionName: 'Floral & Botanical',
+    description: 'Romantic garden roses interwoven with cherry blossom branches and creamy antique texture honoring a loving life.',
+    theme: 'Blush Roses & Cherry Blossoms',
     coverImage: 'https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=1000&q=80',
     insideSpreadImage: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Roses', 'Blush', 'Garden', 'Feminine']
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Floral & Botanical', 'Roses', 'Cherry blossoms', 'Sunflowers', 'Botanical']
   },
+
+  // Nature & Scenic
   {
-    id: 'magnolia-serenade',
-    designNumber: '603',
-    title: 'Magnolia Blossom Serenade',
-    collectionId: 'floral',
-    collectionName: 'Floral',
-    description: 'Stately Southern magnolias and glossy emerald foliage framing classic serif typography with dignified natural poise.',
-    theme: 'Southern Magnolia & Emerald Foliage',
-    coverImage: 'https://images.unsplash.com/photo-1463936575829-25148e1db1b8?auto=format&fit=crop&w=1000&q=80',
-    insideSpreadImage: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80',
-    availableFormats: ['4-page', '6-page', '8-page booklet', 'Trifold'],
-    popularAddOns: ['Photo collage insert', 'Digital program + QR code', 'Prayer cards', 'Bookmarks'],
-    tags: ['Magnolia', 'Botanical', 'Southern', 'Graceful']
+    id: 'mountain-sunset-valley',
+    designNumber: '501',
+    title: 'Majestic Mountains & Sunsets',
+    collectionId: 'nature-scenic',
+    collectionName: 'Nature & Scenic',
+    description: 'Panoramic mountain peaks glowing beneath sunset skies with tranquil rivers and peaceful autumn woodland landscapes.',
+    theme: 'Mountains, Rivers & Golden Sunsets',
+    coverImage: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Nature & Scenic', 'Mountains', 'Waterfalls', 'Sunsets', 'Lakes', 'Forests'],
+    isFeatured: true
+  },
+
+  // Butterflies & Birds
+  {
+    id: 'monarch-flight',
+    designNumber: '601',
+    title: 'Monarch Butterflies & Hummingbirds',
+    collectionId: 'butterflies-birds',
+    collectionName: 'Butterflies & Birds',
+    description: 'Monarch butterflies rising gracefully toward golden beams with hummingbirds in flight and soft floral accents.',
+    theme: 'Monarch Butterflies & Cardinals',
+    coverImage: 'https://images.unsplash.com/photo-1535083783855-76ae62b2914e?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Butterflies & Birds', 'Monarch butterflies', 'Hummingbirds', 'Cardinals', 'White doves', 'Birds in flight']
+  },
+
+  // Sports & Athletics
+  {
+    id: 'champions-court',
+    designNumber: '701',
+    title: 'Champions Field & Court Tribute',
+    collectionId: 'sports-athletics',
+    collectionName: 'Sports & Athletics',
+    description: 'Celebrates dedicated athletes and sports lovers across basketball, football, baseball, soccer, track, and boxing.',
+    theme: 'Athletic Passion & Championship Legacy',
+    coverImage: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1519766304817-4f37bda74a29?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Sports & Athletics', 'Basketball', 'Football', 'Baseball', 'Soccer', 'Boxing', 'Golf', 'Track']
+  },
+
+  // Military & Veterans
+  {
+    id: 'valor-service',
+    designNumber: '801',
+    title: 'Valor & Patriotic Service',
+    collectionId: 'military-veterans',
+    collectionName: 'Military & Veterans',
+    description: 'Dignified military tribute honoring Army, Navy, Air Force, Marines, Coast Guard, and Space Force veterans.',
+    theme: 'National Honor & Military Service',
+    coverImage: 'https://images.unsplash.com/photo-1579975097566-b251bc5d918c?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Military & Veterans', 'Army', 'Navy', 'Air Force', 'Marines', 'Coast Guard', 'Patriotic tributes'],
+    isFeatured: true
+  },
+
+  // First Responders & Public Service
+  {
+    id: 'first-responders-honor',
+    designNumber: '802',
+    title: 'Guardians of the City',
+    collectionId: 'first-responders',
+    collectionName: 'First Responders & Public Service',
+    description: 'NYPD, FDNY, EMS, emergency dispatchers, and correction officers honored with ceremonial shields and badges of courage.',
+    theme: 'NYPD, FDNY & EMS Brotherhood',
+    coverImage: 'https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['First Responders & Public Service', 'NYPD', 'FDNY', 'EMS', 'Dispatchers', 'Corrections']
+  },
+
+  // NYC Places of Interest
+  {
+    id: 'nyc-brooklyn-bridge',
+    designNumber: '901',
+    title: 'Brooklyn Bridge & NYC Skyline',
+    collectionId: 'nyc-places',
+    collectionName: 'NYC Places of Interest',
+    description: 'The iconic Brooklyn Bridge cables overlooking Manhattan skyline, Queens, Harlem, and subway-inspired artistic accents.',
+    theme: 'Brooklyn Bridge, Manhattan & Metro Spirit',
+    coverImage: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['NYC Places of Interest', 'NYC skyline', 'Brooklyn Bridge', 'Manhattan', 'Queens', 'Bronx', 'Harlem', 'Subway'],
+    isFeatured: true
+  },
+
+  // Hobbies & Interests
+  {
+    id: 'master-angler-craftsman',
+    designNumber: '1001',
+    title: 'Angler Waters & Lifelong Crafts',
+    collectionId: 'hobbies-interests',
+    collectionName: 'Hobbies & Interests',
+    description: 'Honoring passions of fishing on tranquil waters, gardening, crafting, chess, reading, and photography.',
+    theme: 'Tranquil Waters, Books & Handcrafts',
+    coverImage: 'https://images.unsplash.com/photo-1522881177606-43d25624957b?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Hobbies & Interests', 'Fishing', 'Gardening', 'Cooking', 'Sewing', 'Reading', 'Chess', 'Photography']
+  },
+
+  // Music & Entertainment
+  {
+    id: 'symphony-jazz-rhythm',
+    designNumber: '1101',
+    title: 'Gospel, Jazz & Melody',
+    collectionId: 'music-entertainment',
+    collectionName: 'Music & Entertainment',
+    description: 'A harmonious tribute featuring vintage sheet music, microphones, vinyl records, and instruments for lovers of rhythm and song.',
+    theme: 'Gospel Melodies, Jazz & Vinyl Records',
+    coverImage: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Music & Entertainment', 'Gospel', 'Jazz', 'R&B', 'Microphones', 'Vinyl records', 'Instruments']
+  },
+
+  // Children & Youth
+  {
+    id: 'celestial-starlight',
+    designNumber: '1201',
+    title: 'Celestial Starlight & Clouds',
+    collectionId: 'children-youth',
+    collectionName: 'Children & Youth',
+    description: 'Soft pastel clouds, shimmering starlight, rainbows, and gentle teddy bears created to wrap young departures in tender grace.',
+    theme: 'Soft Clouds, Stars & Rainbows',
+    coverImage: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Children & Youth', 'Soft clouds', 'Stars', 'Rainbows', 'Teddy bears', 'Youth']
+  },
+
+  // Cultural & Heritage
+  {
+    id: 'kente-heritage',
+    designNumber: '1301',
+    title: 'Heritage Patterns & Ancestral Roots',
+    collectionId: 'cultural-heritage',
+    collectionName: 'Cultural & Heritage',
+    description: 'Vibrant cultural patterns celebrating African, Caribbean, and Latin American heritage, rich family roots, and traditions.',
+    theme: 'Ancestral Tapestry & Cultural Pride',
+    coverImage: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Cultural & Heritage', 'African heritage', 'Caribbean culture', 'Latin American heritage', 'Patterns', 'Traditions']
+  },
+
+  // Modern & Minimalist
+  {
+    id: 'clean-monochrome',
+    designNumber: '1401',
+    title: 'Architectural Monochrome',
+    collectionId: 'modern-minimalist',
+    collectionName: 'Modern & Minimalist',
+    description: 'Clean typography, contemporary black and white layout, crisp margins, and subtle geometric accents.',
+    theme: 'Black & White Contemporary Typography',
+    coverImage: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1518655048521-f130df041f66?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Modern & Minimalist', 'Clean typography', 'Monochrome', 'Geometric', 'Black and white']
+  },
+
+  // Custom & Personalized
+  {
+    id: 'photo-collage-celebration',
+    designNumber: '2301',
+    title: 'Photo Collage & Storyboard',
+    collectionId: 'custom-personalized',
+    collectionName: 'Custom & Personalized',
+    description: 'Custom photo collage tribute featuring meaningful locations, family memories, and personalized backgrounds.',
+    theme: 'Photo Collages & Meaningful Locations',
+    coverImage: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1000&q=80',
+    insideSpreadImage: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80',
+    availableFormats: DEFAULT_FORMATS,
+    popularAddOns: DEFAULT_ADDONS,
+    tags: ['Custom & Personalized', 'Photo collages', 'Custom backgrounds', 'Meaningful locations', 'Unique themes']
   }
 ]
 
@@ -374,4 +673,3 @@ export function getDesignsByCollection(collectionId: string): GalleryDesign[] {
 export function getDesignById(id: string): GalleryDesign | undefined {
   return GALLERY_DESIGNS.find(d => d.id === id || d.designNumber === id)
 }
-

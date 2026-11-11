@@ -838,7 +838,7 @@ function MemorialContent({ params }: { params: Promise<{ id: string }> }) {
               Preserved with care by Lilies of the Field Memorial Keepsakes · Brooklyn, NY
             </p>
             <p className="tx" style={{ fontSize: '12px', color: '#666', margin: 0 }}>
-              To create a lasting Legacy Tribute or order memorial keepsakes, contact us at (718) 924-2004 or orders@liliesofthefield.design
+              To create a lasting Legacy Tribute or order memorial keepsakes, contact us at (917) 300-1104 or orders@liliesofthefield.design
             </p>
           </div>
         </div>
