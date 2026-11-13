@@ -31,6 +31,16 @@ export default function GalleryPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [flipbookOpen, setFlipbookOpen] = useState(false)
   const [orderModalDesign, setOrderModalDesign] = useState<GalleryDesign | null>(null)
+  const [showAllCollections, setShowAllCollections] = useState(false)
+
+  // 6 Primary Signature Collections vs 18 Additional Collections
+  const signatureCollections = useMemo(() => {
+    return GALLERY_COLLECTIONS.filter((c) => c.isPrimary)
+  }, [])
+
+  const otherCollections = useMemo(() => {
+    return GALLERY_COLLECTIONS.filter((c) => !c.isPrimary)
+  }, [])
 
   // Filtered designs
   const filteredDesigns = useMemo(() => {
@@ -53,6 +63,14 @@ export default function GalleryPage() {
 
   const handleSelectCollection = (collectionId: string) => {
     setSelectedCollection(collectionId)
+    // Smooth scroll down to the designs grid
+    const el = document.getElementById('designs-grid-section')
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
+  const handleSelectTier = (tierName: string) => {
     // Smooth scroll down to the designs grid
     const el = document.getElementById('designs-grid-section')
     if (el) {
@@ -131,7 +149,487 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* 2. Explore our Design Collections Grid */}
+      {/* 2. CHOOSE YOUR DESIGN EXPERIENCE — THREE SERVICE TIERS */}
+      <section 
+        id="design-experience"
+        className="section-padding" 
+        style={{ 
+          width: '100%', 
+          background: 'linear-gradient(180deg, #faf8f4 0%, #f4eee3 50%, #faf8f4 100%)',
+          borderBottom: '1px solid #e8dfd2',
+          position: 'relative',
+          overflow: 'hidden'
+        }}
+      >
+        <div className="site-container" style={{ maxWidth: '1160px' }}>
+          {/* Header */}
+          <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 44px', position: 'relative' }}>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '7px',
+              fontSize: '11.5px',
+              fontWeight: 700,
+              letterSpacing: '0.16em',
+              textTransform: 'uppercase',
+              color: '#c9963b',
+              marginBottom: '10px'
+            }}>
+              <Sparkles size={14} color="#c9963b" /> Choose Your Design Experience
+            </div>
+
+            <h2 className="s" style={{
+              fontSize: 'clamp(32px, 4.2vw, 46px)',
+              color: '#262626',
+              fontStyle: 'italic',
+              lineHeight: 1.18,
+              margin: '0 0 16px'
+            }}>
+              A Collection for Every Story
+            </h2>
+
+            <p style={{
+              fontSize: 'clamp(14.5px, 1.8vw, 16px)',
+              color: '#555555',
+              lineHeight: 1.68,
+              margin: 0
+            }}>
+              Every life is unique, and every tribute should be just as meaningful. Our three thoughtfully curated collections offer varying levels of personalization and creative design, allowing you to choose the experience that best honors your loved one’s life and legacy.
+            </p>
+          </div>
+
+          {/* Three Tiers Grid */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+            gap: '28px',
+            alignItems: 'stretch'
+          }}>
+            {/* TIER 1: ESSENTIAL COLLECTION */}
+            <div 
+              style={{
+                background: '#ffffff',
+                border: '1px solid #e5dccb',
+                borderRadius: '16px',
+                overflow: 'hidden',
+                boxShadow: '0 8px 24px rgba(0,0,0,0.04)',
+                display: 'flex',
+                flexDirection: 'column',
+                transition: 'all 0.3s ease',
+                position: 'relative'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-6px)'
+                e.currentTarget.style.boxShadow = '0 16px 36px rgba(0,0,0,0.09)'
+                e.currentTarget.style.borderColor = '#1f6f68'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.04)'
+                e.currentTarget.style.borderColor = '#e5dccb'
+              }}
+            >
+              {/* Card Header */}
+              <div style={{ padding: '28px 24px 16px', textAlign: 'center' }}>
+                <div style={{
+                  fontSize: '15px',
+                  fontWeight: 800,
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  color: '#262626',
+                  marginBottom: '4px'
+                }}>
+                  ESSENTIAL
+                </div>
+                <div style={{
+                  fontSize: '11px',
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  color: '#c9963b',
+                  fontWeight: 700,
+                  marginBottom: '8px'
+                }}>
+                  — COLLECTION —
+                </div>
+                <div className="s" style={{
+                  fontSize: '15px',
+                  fontStyle: 'italic',
+                  color: '#666666'
+                }}>
+                  Simple. Beautiful. Timeless.
+                </div>
+              </div>
+
+              {/* Mockup Preview Visual */}
+              <div style={{
+                padding: '0 20px 20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <div style={{
+                  width: '100%',
+                  height: '190px',
+                  borderRadius: '8px',
+                  overflow: 'hidden',
+                  position: 'relative',
+                  background: '#f7f4ed',
+                  border: '1px solid #ebd8b5',
+                  boxShadow: 'inset 0 2px 6px rgba(0,0,0,0.03)'
+                }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img 
+                    src="/images/tiers/essential_preview.jpg" 
+                    alt="Essential Collection Memorial Program Preview"
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                  />
+                </div>
+              </div>
+
+              {/* Lower Curved Container & Description */}
+              <div style={{
+                background: '#faf8f4',
+                borderTop: '1px solid #ede4d5',
+                padding: '24px',
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                borderBottomLeftRadius: '16px',
+                borderBottomRightRadius: '16px'
+              }}>
+                <p style={{
+                  fontSize: '13.5px',
+                  color: '#555555',
+                  lineHeight: 1.6,
+                  margin: '0 0 20px',
+                  textAlign: 'center'
+                }}>
+                  Professionally designed memorial templates, personalized with your loved one’s photographs and service details for an elegant, heartfelt tribute.
+                </p>
+
+                <button
+                  type="button"
+                  onClick={() => handleSelectTier('essential')}
+                  style={{
+                    background: '#3d1a38',
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: '50px',
+                    padding: '12px 24px',
+                    fontSize: '12.5px',
+                    fontWeight: 700,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    cursor: 'pointer',
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    boxShadow: '0 4px 12px rgba(61, 26, 56, 0.25)',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = '#271024')}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = '#3d1a38')}
+                >
+                  Explore Designs &gt;
+                </button>
+              </div>
+            </div>
+
+            {/* TIER 2: SIGNATURE COLLECTION */}
+            <div 
+              style={{
+                background: '#ffffff',
+                border: '1px solid #e5dccb',
+                borderRadius: '16px',
+                overflow: 'hidden',
+                boxShadow: '0 8px 24px rgba(0,0,0,0.04)',
+                display: 'flex',
+                flexDirection: 'column',
+                transition: 'all 0.3s ease',
+                position: 'relative'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-6px)'
+                e.currentTarget.style.boxShadow = '0 16px 36px rgba(0,0,0,0.09)'
+                e.currentTarget.style.borderColor = '#1f6f68'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.04)'
+                e.currentTarget.style.borderColor = '#e5dccb'
+              }}
+            >
+              {/* Card Header */}
+              <div style={{ padding: '28px 24px 16px', textAlign: 'center' }}>
+                <div style={{
+                  fontSize: '15px',
+                  fontWeight: 800,
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  color: '#262626',
+                  marginBottom: '4px'
+                }}>
+                  SIGNATURE
+                </div>
+                <div style={{
+                  fontSize: '11px',
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  color: '#c9963b',
+                  fontWeight: 700,
+                  marginBottom: '8px'
+                }}>
+                  — COLLECTION —
+                </div>
+                <div className="s" style={{
+                  fontSize: '15px',
+                  fontStyle: 'italic',
+                  color: '#666666'
+                }}>
+                  Personalized. Thoughtful. Distinctive.
+                </div>
+              </div>
+
+              {/* Mockup Preview Visual */}
+              <div style={{
+                padding: '0 20px 20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <div style={{
+                  width: '100%',
+                  height: '190px',
+                  borderRadius: '8px',
+                  overflow: 'hidden',
+                  position: 'relative',
+                  background: '#f7f4ed',
+                  border: '1px solid #ebd8b5',
+                  boxShadow: 'inset 0 2px 6px rgba(0,0,0,0.03)'
+                }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img 
+                    src="/images/tiers/signature_preview.jpg" 
+                    alt="Signature Collection Memorial Program Preview"
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                  />
+                </div>
+              </div>
+
+              {/* Lower Curved Container & Description */}
+              <div style={{
+                background: '#faf8f4',
+                borderTop: '1px solid #ede4d5',
+                padding: '24px',
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                borderBottomLeftRadius: '16px',
+                borderBottomRightRadius: '16px'
+              }}>
+                <p style={{
+                  fontSize: '13.5px',
+                  color: '#555555',
+                  lineHeight: 1.6,
+                  margin: '0 0 20px',
+                  textAlign: 'center'
+                }}>
+                  A more customized design experience featuring personalized layouts, creative enhancements, and thoughtful details that beautifully reflect your loved one’s story.
+                </p>
+
+                <button
+                  type="button"
+                  onClick={() => handleSelectTier('signature')}
+                  style={{
+                    background: '#3d1a38',
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: '50px',
+                    padding: '12px 24px',
+                    fontSize: '12.5px',
+                    fontWeight: 700,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    cursor: 'pointer',
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    boxShadow: '0 4px 12px rgba(61, 26, 56, 0.25)',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = '#271024')}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = '#3d1a38')}
+                >
+                  Explore Designs &gt;
+                </button>
+              </div>
+            </div>
+
+            {/* TIER 3: PREMIER COLLECTION (AI-ASSISTED HIGHLIGHTED CARD) */}
+            <div 
+              style={{
+                background: 'linear-gradient(155deg, #2b1127 0%, #461b40 100%)',
+                border: '1.5px solid #c9963b',
+                borderRadius: '16px',
+                overflow: 'hidden',
+                boxShadow: '0 14px 36px rgba(43, 17, 39, 0.28)',
+                display: 'flex',
+                flexDirection: 'column',
+                transition: 'all 0.3s ease',
+                position: 'relative'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-6px)'
+                e.currentTarget.style.boxShadow = '0 20px 48px rgba(43, 17, 39, 0.4)'
+                e.currentTarget.style.borderColor = '#e9c98a'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 14px 36px rgba(43, 17, 39, 0.28)'
+                e.currentTarget.style.borderColor = '#c9963b'
+              }}
+            >
+              {/* Top-Right AI-Assisted Design Golden Ribbon */}
+              <div style={{
+                position: 'absolute',
+                top: '0',
+                right: '0',
+                background: 'linear-gradient(135deg, #e9c98a 0%, #c9963b 100%)',
+                color: '#261a06',
+                fontSize: '9.5px',
+                fontWeight: 800,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                padding: '6px 14px',
+                borderBottomLeftRadius: '10px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                zIndex: 2
+              }}>
+                <Sparkles size={11} color="#261a06" /> With AI-Assisted Design
+              </div>
+
+              {/* Card Header */}
+              <div style={{ padding: '28px 24px 16px', textAlign: 'center' }}>
+                <div style={{
+                  fontSize: '15px',
+                  fontWeight: 800,
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  color: '#ffffff',
+                  marginBottom: '4px'
+                }}>
+                  PREMIER
+                </div>
+                <div style={{
+                  fontSize: '11px',
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  color: '#e9c98a',
+                  fontWeight: 700,
+                  marginBottom: '8px'
+                }}>
+                  — COLLECTION —
+                </div>
+                <div className="s" style={{
+                  fontSize: '15px',
+                  fontStyle: 'italic',
+                  color: '#e8d7ea'
+                }}>
+                  Elevated. Artistic. One of a Kind.
+                </div>
+              </div>
+
+              {/* Mockup Preview Visual */}
+              <div style={{
+                padding: '0 20px 20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <div style={{
+                  width: '100%',
+                  height: '190px',
+                  borderRadius: '8px',
+                  overflow: 'hidden',
+                  position: 'relative',
+                  background: 'rgba(0,0,0,0.25)',
+                  border: '1px solid rgba(233, 201, 138, 0.35)',
+                  boxShadow: 'inset 0 2px 6px rgba(0,0,0,0.3)'
+                }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img 
+                    src="/images/tiers/premier_preview.jpg" 
+                    alt="Premier Collection Memorial Program Preview"
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                  />
+                </div>
+              </div>
+
+              {/* Lower Curved Container & Description */}
+              <div style={{
+                background: '#faf6fa',
+                borderTop: '1px solid rgba(201, 150, 59, 0.3)',
+                padding: '24px',
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                borderBottomLeftRadius: '16px',
+                borderBottomRightRadius: '16px'
+              }}>
+                <p style={{
+                  fontSize: '13.5px',
+                  color: '#443342',
+                  lineHeight: 1.6,
+                  margin: '0 0 20px',
+                  textAlign: 'center'
+                }}>
+                  Our most exclusive design experience, combining advanced customization, AI-assisted artistic backgrounds, enhanced photo editing, and distinctive design elements to create a truly personalized tribute.
+                </p>
+
+                <button
+                  type="button"
+                  onClick={() => handleSelectTier('premier')}
+                  style={{
+                    background: 'linear-gradient(135deg, #e9c98a 0%, #c9963b 100%)',
+                    color: '#261a06',
+                    border: 'none',
+                    borderRadius: '50px',
+                    padding: '12px 24px',
+                    fontSize: '12.5px',
+                    fontWeight: 800,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    cursor: 'pointer',
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    boxShadow: '0 4px 14px rgba(201, 150, 59, 0.4)',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.filter = 'brightness(1.08)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.filter = 'brightness(1)')}
+                >
+                  Explore Designs &gt;
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Explore our 6 Signature Collections Grid */}
       <section className="section-padding" style={{ width: '100%', background: '#ffffff' }}>
         <div className="site-container">
           <div style={{
@@ -143,26 +641,28 @@ export default function GalleryPage() {
             gap: '14px'
           }}>
             <div>
-              <div className="eb">Our Design Catalog</div>
+              <div className="eb">Browse By Theme</div>
               <h2 className="s" style={{ fontSize: 'clamp(26px, 3.2vw, 36px)', color: '#262626', margin: '0 0 6px' }}>
-                Explore our Design Collections
+                Six Signature Collections
               </h2>
               <p style={{ fontSize: '14px', color: '#666', margin: 0, maxWidth: '640px' }}>
-                Browse primary collections and searchable themes below. Select any category tile to examine its artwork and filter matching memorial program designs.
+                Browse our six signature memorial collections below. Select any collection tile to examine sample layouts and filter matching designs, or explore additional themes below.
               </p>
             </div>
-            <div style={{ fontSize: '13px', color: '#1f6f68', fontWeight: 600 }}>
-              {GALLERY_COLLECTIONS.length} Design Collections Available
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px' }}>
+              <span style={{ color: '#1f6f68', fontWeight: 700 }}>6 Signature Collections</span>
+              <span style={{ color: '#aaa' }}>·</span>
+              <span style={{ color: '#666' }}>24 Total Available</span>
             </div>
           </div>
 
-          {/* 3-Column Tile Grid */}
+          {/* 3-Column Tile Grid - 6 Signature Collections */}
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
             gap: '24px'
           }}>
-            {GALLERY_COLLECTIONS.map((col) => {
+            {signatureCollections.map((col) => {
               const matchingDesign = GALLERY_DESIGNS.find(d => d.designNumber === col.coverDesignNumber) || GALLERY_DESIGNS.find(d => d.collectionId === col.id)
               const count = GALLERY_DESIGNS.filter(d => d.collectionId === col.id).length
 
@@ -309,6 +809,249 @@ export default function GalleryPage() {
               )
             })}
           </div>
+
+          {/* Action Bar: Explore More Categories + Explore More Designs Button */}
+          <div style={{
+            marginTop: '36px',
+            padding: '24px 28px',
+            background: '#faf8f4',
+            borderRadius: '8px',
+            border: '1px solid #e8dfd2',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '16px'
+          }}>
+            <div>
+              <h3 className="s" style={{ fontSize: '18px', color: '#262626', margin: '0 0 4px' }}>
+                Looking for more specialized themes?
+              </h3>
+              <p style={{ fontSize: '13.5px', color: '#666', margin: 0, maxWidth: '580px' }}>
+                Explore 18 additional collections below including Sports, Military, First Responders, NYC Landmarks, Cultural Heritage, Hobbies &amp; more.
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              <button
+                type="button"
+                onClick={() => setShowAllCollections(!showAllCollections)}
+                className="b"
+                style={{
+                  background: showAllCollections ? '#e9e3d8' : '#ffffff',
+                  borderColor: '#1f6f68',
+                  color: '#1f6f68',
+                  fontSize: '13px',
+                  fontWeight: 700,
+                  cursor: 'pointer'
+                }}
+              >
+                {showAllCollections ? 'Hide Additional Collections ▲' : 'Explore More Categories (18 Themes) ▼'}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const el = document.getElementById('designs-grid-section')
+                  if (el) el.scrollIntoView({ behavior: 'smooth' })
+                }}
+                className="b b1"
+                style={{
+                  fontSize: '13px',
+                  cursor: 'pointer'
+                }}
+              >
+                Explore More Designs ↓
+              </button>
+            </div>
+          </div>
+
+          {/* Expandable Section for the 18 Additional Collections */}
+          {showAllCollections && (
+            <div style={{
+              marginTop: '36px',
+              paddingTop: '32px',
+              borderTop: '1px dashed #dcd3c4'
+            }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-end',
+                marginBottom: '26px',
+                flexWrap: 'wrap',
+                gap: '12px'
+              }}>
+                <div>
+                  <div className="eb" style={{ color: '#a87a22' }}>Specialty &amp; Tribute Themes</div>
+                  <h3 className="s" style={{ fontSize: '24px', color: '#262626', margin: '0 0 4px' }}>
+                    18 Additional Design Collections
+                  </h3>
+                  <p style={{ fontSize: '13.5px', color: '#666', margin: 0 }}>
+                    Select any theme below to examine flat artwork and filter matching memorial program templates.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowAllCollections(false)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#1f6f68',
+                    fontSize: '12.5px',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    textDecoration: 'underline'
+                  }}
+                >
+                  Show Only 6 Signature Collections ▲
+                </button>
+              </div>
+
+              {/* 3-Column Tile Grid for the 18 Additional Collections */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+                gap: '24px'
+              }}>
+                {otherCollections.map((col) => {
+                  const matchingDesign = GALLERY_DESIGNS.find(d => d.designNumber === col.coverDesignNumber) || GALLERY_DESIGNS.find(d => d.collectionId === col.id)
+                  const count = GALLERY_DESIGNS.filter(d => d.collectionId === col.id).length
+
+                  return (
+                    <div
+                      key={col.id}
+                      onClick={() => handleSelectCollection(col.id)}
+                      style={{
+                        background: '#fdfbf7',
+                        border: '1px solid #e8dfd2',
+                        borderRadius: '6px',
+                        overflow: 'hidden',
+                        cursor: 'pointer',
+                        transition: 'all 0.25s ease',
+                        boxShadow: '0 4px 16px rgba(0,0,0,0.04)',
+                        display: 'flex',
+                        flexDirection: 'column'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-4px)'
+                        e.currentTarget.style.boxShadow = '0 12px 28px rgba(0,0,0,0.1)'
+                        e.currentTarget.style.borderColor = '#1f6f68'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)'
+                        e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.04)'
+                        e.currentTarget.style.borderColor = '#e8dfd2'
+                      }}
+                    >
+                      <div style={{
+                        background: '#f2ece1',
+                        padding: '24px 20px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderBottom: '1px solid #e8dfd2',
+                        position: 'relative',
+                        minHeight: '240px'
+                      }}>
+                        {matchingDesign ? (
+                          <div style={{ width: '170px' }}>
+                            <CoverFlatView design={matchingDesign} showLabel={false} />
+                          </div>
+                        ) : (
+                          <div style={{
+                            width: '170px',
+                            aspectRatio: '1 / 1.414',
+                            background: '#ffffff',
+                            border: '1px solid #dcd3c4',
+                            borderRadius: '3px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: '#888',
+                            fontSize: '12px',
+                            padding: '16px',
+                            textAlign: 'center'
+                          }}>
+                            {col.name}
+                          </div>
+                        )}
+                      </div>
+
+                      <div style={{ padding: '20px 22px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                        <div>
+                          <h4 className="s" style={{
+                            fontSize: '19px',
+                            fontWeight: 700,
+                            color: '#262626',
+                            margin: '0 0 6px'
+                          }}>
+                            {col.name}
+                          </h4>
+
+                          <p style={{
+                            fontSize: '13px',
+                            color: '#555',
+                            margin: '0 0 10px',
+                            lineHeight: 1.45
+                          }}>
+                            {col.description}
+                          </p>
+
+                          <div style={{
+                            background: 'rgba(31, 111, 104, 0.04)',
+                            border: '1px solid rgba(31, 111, 104, 0.1)',
+                            borderRadius: '4px',
+                            padding: '8px 10px',
+                            marginBottom: '14px'
+                          }}>
+                            <div style={{
+                              fontSize: '10px',
+                              fontWeight: 700,
+                              letterSpacing: '0.08em',
+                              textTransform: 'uppercase',
+                              color: '#1f6f68',
+                              marginBottom: '2px'
+                            }}>
+                              Themes
+                            </div>
+                            <div style={{
+                              fontSize: '11.5px',
+                              color: '#444',
+                              lineHeight: 1.4
+                            }}>
+                              {col.themes}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          borderTop: '1px solid #ebd8b5',
+                          paddingTop: '10px'
+                        }}>
+                          <span style={{
+                            fontSize: '11.5px',
+                            fontWeight: 700,
+                            letterSpacing: '0.08em',
+                            textTransform: 'uppercase',
+                            color: '#1f6f68'
+                          }}>
+                            VIEW DESIGNS &gt;
+                          </span>
+                          {count > 0 && (
+                            <span style={{ fontSize: '11px', color: '#777' }}>
+                              {count} {count === 1 ? 'Design' : 'Designs'}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -685,7 +1428,7 @@ export default function GalleryPage() {
               fontWeight: 700,
               marginBottom: '8px'
             }}>
-              Interactive Catalog
+              For Funeral Professionals &amp; Directors
             </div>
 
             <h2 className="s" style={{
@@ -694,7 +1437,7 @@ export default function GalleryPage() {
               color: '#ffffff',
               margin: '0 0 12px'
             }}>
-              Prefer to View the Full Catalog?
+              Sample Box &amp; Complete Catalog
             </h2>
 
             <p style={{
@@ -704,7 +1447,7 @@ export default function GalleryPage() {
               maxWidth: '640px',
               margin: '0 0 24px'
             }}>
-              You can explore our complete print catalog as a digital flipbook or request printed catalog swatches delivered directly to your funeral home or chapel. Questions? Call our studio directly at (917) 300-1104.
+              For funeral homes, mortuaries, and chapels: request a complimentary physical presentation box with printed paper swatches, lamination samples, and keepsake specimens. You can also review our digital flipbook anytime. Questions? Call our studio directly at (917) 300-1104.
             </p>
 
             <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -723,7 +1466,7 @@ export default function GalleryPage() {
               </button>
 
               <Link
-                href="/funeral-service-providers"
+                href="/funeral-service-providers#sample-box"
                 className="b"
                 style={{
                   padding: '13px 26px',
@@ -735,7 +1478,7 @@ export default function GalleryPage() {
                   color: '#ffffff'
                 }}
               >
-                Request Physical Catalog &amp; Sample Box
+                Request Sample Box (Funeral Professionals) →
               </Link>
             </div>
           </div>

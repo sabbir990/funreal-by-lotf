@@ -59,7 +59,7 @@ export default function Footer() {
           <div>
             <p className="fh">Helpful Links</p>
             <Link href="/services#about">About Lilies of the Field</Link>
-            <Link href="/memorials">Memorial Garden</Link>
+            <Link href="/memorials">Forever Remembered</Link>
             <Link href="/resources">Resources Hub</Link>
             <Link href="/resources">FAQs</Link>
           </div>

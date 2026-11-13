@@ -116,13 +116,13 @@ export default function Home() {
               </p>
 
               <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                <Link href="#collection" className="b b1">
-                  Explore Our Collection →
+                <Link href="/gallery" className="b b1">
+                  Explore Design Gallery →
                 </Link>
                 <Link href="#calculator" className="b">
                   Place an Order
                 </Link>
-                <Link href="/services#providers" className="b bg">
+                <Link href="/funeral-service-providers" className="b bg">
                   Funeral Service Providers
                 </Link>
               </div>
@@ -333,12 +333,26 @@ export default function Home() {
               margin: '12px 0 0',
               color: '#e8f1ef'
             }}>
-              We partner with funeral homes, mortuary directors, and celebrants across the New York metropolitan area to deliver flawless keepsakes, strict deadline execution, and direct chapel delivery.
+              We partner with funeral homes, mortuary directors, and celebrants across the New York metropolitan area to deliver flawless keepsakes, strict deadline execution, direct chapel delivery, and complimentary sample boxes.
             </p>
           </div>
-          <Link href="/services#providers" className="b bg" style={{ whiteSpace: 'nowrap' }}>
-            Funeral Service Providers Program
-          </Link>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            <Link href="/funeral-service-providers" className="b bg" style={{ whiteSpace: 'nowrap' }}>
+              Funeral Service Providers Program
+            </Link>
+            <Link 
+              href="/funeral-service-providers#sample-box" 
+              className="b" 
+              style={{
+                whiteSpace: 'nowrap',
+                background: 'transparent',
+                borderColor: '#ffffff',
+                color: '#ffffff'
+              }}
+            >
+              Request Sample Box
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -453,9 +467,12 @@ export default function Home() {
             </div>
           </div>
 
-          <div style={{ marginTop: '36px' }}>
-            <Link href="/services" className="b b1">
-              View Our Full Collection
+          <div style={{ marginTop: '36px', display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link href="/gallery" className="b b1">
+              Explore 6 Signature Collections &amp; Designs →
+            </Link>
+            <Link href="/services" className="b">
+              View Our Full Product Line
             </Link>
           </div>
         </div>

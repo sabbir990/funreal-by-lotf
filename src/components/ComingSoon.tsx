@@ -25,7 +25,7 @@ export default function ComingSoon({
   backLabel = 'Back to Home',
   primaryAction = {
     href: '/memorials',
-    label: 'Explore Memorial Garden'
+    label: 'Explore Forever Remembered'
   }
 }: ComingSoonProps) {
   return (

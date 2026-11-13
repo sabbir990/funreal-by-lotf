@@ -194,7 +194,7 @@ export default function Navbar() {
                 whiteSpace: 'nowrap'
               }}
             >
-              Memorial Garden
+              Forever Remembered
             </Link>
 
             {/* Resources Dropdown */}
@@ -382,7 +382,7 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
               style={{ padding: '6px 0', fontSize: '15px', color: '#262626' }}
             >
-              Memorial Garden
+              Forever Remembered
             </Link>
             <Link 
               href="/resources" 

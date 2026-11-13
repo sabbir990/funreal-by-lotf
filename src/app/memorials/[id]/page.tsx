@@ -352,7 +352,7 @@ function MemorialContent({ params }: { params: Promise<{ id: string }> }) {
                 gap: '6px'
               }}
             >
-              <ArrowLeft size={13} /> Back to Memorial Garden
+              <ArrowLeft size={13} /> Back to Forever Remembered
             </Link>
           </div>
 

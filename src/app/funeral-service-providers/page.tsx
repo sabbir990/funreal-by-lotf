@@ -150,6 +150,19 @@ export default function FuneralServiceProvidersPage() {
             >
               Submit an Order as Provider
             </a>
+            <a 
+              href="#sample-box" 
+              className="b"
+              style={{
+                padding: '15px 28px',
+                fontSize: '13px',
+                borderColor: '#1f6f68',
+                color: '#1f6f68',
+                background: '#ffffff'
+              }}
+            >
+              Request Sample Box
+            </a>
             <Link 
               href="/login" 
               className="b"
@@ -602,6 +615,40 @@ export default function FuneralServiceProvidersPage() {
       </section>
 
 
+      {/* 4.5. Complimentary Sample Box for Funeral Professionals */}
+      <section id="sample-box" style={{
+        background: '#f5efe6',
+        borderTop: '1px solid #e0d5c2',
+        borderBottom: '1px solid #e0d5c2',
+        paddingTop: '44px',
+        paddingBottom: '44px'
+      }}>
+        <div className="site-container">
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '32px',
+            flexWrap: 'wrap'
+          }}>
+            <div style={{ maxWidth: '680px' }}>
+              <div className="eb" style={{ color: '#1f6f68', marginBottom: '8px' }}>
+                Exclusively for Funeral Professionals
+              </div>
+              <h2 className="s" style={{ fontSize: 'clamp(24px, 2.8vw, 32px)', color: '#262626', margin: '0 0 10px' }}>
+                Complimentary Presentation Sample Box
+              </h2>
+              <p style={{ fontSize: '14.5px', color: '#555', lineHeight: 1.6, margin: 0 }}>
+                We provide funeral homes, directors, and chapels with a complimentary presentation box featuring physical samples of our 4-page, 6-page, and 8-page memorial programs, laminated prayer cards, keepsake bookmarks, cardstock paper swatches, and our complete print catalog.
+              </p>
+            </div>
+            <a href="#register" className="b bg" style={{ whiteSpace: 'nowrap', padding: '14px 28px' }}>
+              Request Sample Box Below ↓
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* 5. Request Provider Access Form & Resources Section */}
       <section id="register" style={{
         paddingTop: '36px',
@@ -852,6 +899,29 @@ export default function FuneralServiceProvidersPage() {
                         }}
                       />
                     </div>
+
+                    {/* Sample Box Request Checkbox for Funeral Professionals */}
+                    <div style={{ gridColumn: '1 / -1', marginTop: '6px' }}>
+                      <label style={{
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: '10px',
+                        padding: '12px 14px',
+                        background: '#ffffff',
+                        borderRadius: '4px',
+                        border: '1px solid #dcd3c4',
+                        cursor: 'pointer'
+                      }}>
+                        <input 
+                          type="checkbox"
+                          defaultChecked={true}
+                          style={{ marginTop: '3px', width: '16px', height: '16px', accentColor: '#1f6f68', cursor: 'pointer' }}
+                        />
+                        <span style={{ fontSize: '13px', color: '#262626', lineHeight: 1.45 }}>
+                          <strong>Request Complimentary Sample Box</strong> — Check this box to receive our presentation box with physical program specimens, cardstock swatches, laminated prayer cards, and print catalog delivered to your funeral home.
+                        </span>
+                      </label>
+                    </div>
                   </div>
 
                   <div style={{ marginTop: '22px' }}>
@@ -975,6 +1045,33 @@ export default function FuneralServiceProvidersPage() {
                   </span>
                   <span style={{ fontSize: '11px', color: '#888', background: '#f5f5f5', padding: '2px 8px', borderRadius: '3px' }}>
                     Catalog
+                  </span>
+                </div>
+
+                <div 
+                  onClick={() => setSelectedDoc('Funeral Professional Sample Box & Swatch Kit Details')}
+                  style={{
+                    background: '#ffffff',
+                    border: '1px solid #c9963b',
+                    borderRadius: '4px',
+                    padding: '12px 16px',
+                    fontSize: '13px',
+                    color: '#262626',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#1f6f68')}
+                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#c9963b')}
+                >
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <Sparkles size={16} style={{ color: '#c9963b', flexShrink: 0 }} />
+                    <strong>Physical Sample Box &amp; Paper Swatch Kit</strong>
+                  </span>
+                  <span style={{ fontSize: '11px', color: '#c9963b', background: '#fcf8ee', padding: '2px 8px', borderRadius: '3px', fontWeight: 600 }}>
+                    Complimentary Box
                   </span>
                 </div>
 
