@@ -49,8 +49,9 @@ export const DEFAULT_QUANTITIES = [
 ]
 
 export const DEFAULT_ADDONS = [
+  'Digital Program ($50)',
+  'Legacy Tribute Page ($150)',
   'Photo Collage Insert',
-  'Digital Program + QR Code',
   'Additional Pages'
 ]
 

@@ -5,12 +5,12 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'Lilies of the Field — Memorial Keepsakes | Brooklyn, NY',
+  title: 'Lilies of the Field — Memorial Keepsakes',
   description: 'Every Life Deserves to Be Celebrated. Premium memorial programs, prayer cards, photo keepsakes and tribute pieces thoughtfully created to honor every life and every story.',
-  keywords: ['Lilies of the Field', 'memorial programs', 'prayer cards', 'funeral keepsakes', 'digital memorials', 'funeral print Brooklyn'],
+  keywords: ['Lilies of the Field', 'memorial programs', 'prayer cards', 'funeral keepsakes', 'digital memorials', 'funeral print'],
   openGraph: {
     title: 'Lilies of the Field — Memorial Keepsakes',
-    description: 'Bespoke Memorial Design & Fine Printing · Brooklyn, NY',
+    description: 'Bespoke Memorial Design & Fine Printing',
     type: 'website',
   },
 }

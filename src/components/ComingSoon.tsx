@@ -145,7 +145,7 @@ export default function ComingSoon({
               </span>
             </div>
             <p style={{ fontSize: '13.5px', color: '#444', lineHeight: 1.6, margin: '0 0 16px' }}>
-              Our Brooklyn design studio is actively taking orders, reviewing photo keepsakes, and answering inquiries directly.
+              Our design studio is actively taking orders, reviewing photo keepsakes, and answering inquiries directly.
             </p>
             <div style={{
               display: 'grid',
@@ -180,7 +180,7 @@ export default function ComingSoon({
                 <Mail size={14} color="#1f6f68" /> orders@liliesofthefield.design
               </a>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#666' }}>
-                <MapPin size={14} color="#1f6f68" /> Brooklyn, NY · Studio By Appt.
+                <MapPin size={14} color="#1f6f68" /> 21229 Jamaica Ave, Queens Village · By Appt.
               </div>
             </div>
           </div>

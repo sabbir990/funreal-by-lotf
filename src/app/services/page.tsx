@@ -8,7 +8,7 @@ export default function ServicesPage() {
       badge="Our Full Collection &amp; Ordering"
       title="Bespoke Keepsakes &amp; Services"
       subtitle="Online Ordering &amp; Interactive Catalog Launching Soon"
-      description="We are currently completing our full online ordering suite and interactive product catalog. In the meantime, our Brooklyn design studio is actively designing and printing custom memorial programs, prayer cards, and tribute keepsakes every day."
+      description="We are currently completing our full online ordering suite and interactive product catalog. In the meantime, our Queens Village design studio is actively designing and printing custom memorial programs, prayer cards, and tribute keepsakes every day."
       backHref="/gallery"
       backLabel="Browse Design Gallery"
       primaryAction={{

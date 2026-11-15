@@ -128,7 +128,7 @@ export default function FuneralServiceProvidersPage() {
             lineHeight: 1.65,
             color: '#555555'
           }}>
-            Reliable memorial design and production support for funeral homes, directors, and celebrants across Brooklyn and the greater New York metropolitan area and nationwide.
+            Reliable memorial design and production support for funeral homes, directors, and celebrants across New York, the metropolitan area, and nationwide.
           </p>
 
           {/* Action CTAs */}
@@ -139,8 +139,8 @@ export default function FuneralServiceProvidersPage() {
             flexWrap: 'wrap',
             marginBottom: '40px'
           }}>
-            <a 
-              href="#register" 
+            <Link 
+              href="/providers/order" 
               className="b bg"
               style={{
                 boxShadow: '0 4px 14px rgba(201,150,59,0.35)',
@@ -149,7 +149,7 @@ export default function FuneralServiceProvidersPage() {
               }}
             >
               Submit an Order as Provider
-            </a>
+            </Link>
             <a 
               href="#sample-box" 
               className="b"

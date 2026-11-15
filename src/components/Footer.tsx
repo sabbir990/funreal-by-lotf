@@ -1,14 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 export default function Footer() {
-  const [currentYear, setCurrentYear] = useState('2026')
-
-  useEffect(() => {
-    setCurrentYear(new Date().getFullYear().toString())
-  }, [])
+  const currentYear = '2026'
 
   return (
     <footer className="cr ft" style={{ width: '100%', borderTop: '1px solid var(--border-cream)', paddingTop: '56px', paddingBottom: '28px' }}>
@@ -29,7 +24,8 @@ export default function Footer() {
                 width: 'auto',
                 objectFit: 'contain',
                 display: 'block',
-                marginBottom: '12px'
+                marginBottom: '12px',
+                mixBlendMode: 'multiply'
               }}
             />
             <p className="tx" style={{ margin: '12px 0 16px', lineHeight: 1.6, color: '#555' }}>
@@ -93,7 +89,7 @@ export default function Footer() {
           gap: '10px'
         }}>
           <div>© {currentYear} Lilies of the Field Memorial Keepsakes. All rights reserved.</div>
-          <div style={{ color: '#888' }}>Brooklyn, NY · Dedicated Memorial Craftsmanship</div>
+          <div style={{ color: '#888' }}>Dedicated Memorial Craftsmanship &amp; Keepsakes</div>
         </div>
       </div>
     </footer>

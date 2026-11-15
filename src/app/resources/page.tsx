@@ -1,6 +1,11 @@
 'use client'
 
 import { useState } from 'react'
+import { 
+  POEMS_AND_PRAYERS_LIST, 
+  ACKNOWLEDGEMENTS_LIST, 
+  ORDER_OF_SERVICE_TEMPLATES 
+} from '@/data/memorialContentData'
 import Link from 'next/link'
 import { 
   BookOpen, 
@@ -73,106 +78,81 @@ const PLANNING_GUIDES: GuideItem[] = [
     id: 'order-of-service-outlines',
     tag: 'Service planning',
     title: 'Order of Service Outlines',
-    description: 'Four standard service formats: Traditional Funeral Service, Homegoing Celebration, Memorial Service, and Celebration of Life, or any custom format.',
+    description: 'Our four official ceremony outlines: Standard Order of Service, Memorial Celebration, Order of Funeral Mass, or Custom. Families copy these templates and type participant names next to each line.',
     iconName: 'ScrollText',
     sections: [
       {
-        heading: 'Format A: Traditional Funeral Service',
-        content: 'The time-honored sanctuary order followed across traditional ceremonies:',
+        heading: 'Standard Order of Service',
+        content: 'The classic church or chapel funeral order with casket present:',
+        copyable: ORDER_OF_SERVICE_TEMPLATES.standard,
         bullets: [
-          'Musical Prelude · Classical or Organ Hymn',
-          'Processional · Clergy, Family & Pallbearers',
+          'Musical Prelude · Processional',
           'Opening Prayer & Invocation',
-          'Scripture Readings · Old Testament & New Testament',
-          'Musical Selection or Soloist Hymn',
-          'Acknowledgements, Cards & Condolences',
-          'Reading of the Obituary (Life Story)',
-          'Tributes & Remarks (Limited to 2–3 minutes per person)',
-          'Eulogy / Words of Comfort by Presiding Officiant',
-          'Benediction & Recessional'
-        ],
-        copyable: `ORDER OF SERVICE\n\nMusical Prelude\nProcessional ......... Clergy & Family\nOpening Prayer & Invocation ......... Pastor\nOld Testament Reading ......... Psalm 23\nNew Testament Reading ......... John 14:1-6\nMusical Selection\nAcknowledgements & Resolutions\nReading of the Obituary\nReflections from Friends & Family\nEulogy / Words of Comfort ......... Officiant\nBenediction & Recessional`
-      },
-      {
-        heading: 'Format B: Homegoing Celebration',
-        content: 'A vibrant, uplifting worship service celebrating a faithful soul returning home to Glory:',
-        bullets: [
-          'Processional Hymn of Praise',
-          'Prayer of Consolation',
-          'Choral Praise & Worship',
-          'Scriptural Affirmation of Faith',
-          'Church Resolutions & Community Letters',
-          'Expressions of Love & Remembrance',
-          'Life Tribute Slideshow or Instrumental',
-          'The Homegoing Eulogy & Message of Hope',
-          'Recessional of Triumph'
+          'Scripture Readings (Old & New Testament)',
+          'Musical Selection · Obituary Reading',
+          'Acknowledgements & Resolutions',
+          'Reflections / Words of Remembrance',
+          'Eulogy by Presiding Officiant',
+          'Closing Prayer, Benediction & Recessional'
         ]
       },
       {
-        heading: 'Format C: Contemporary Celebration of Life',
-        content: 'An intimate, personalized gathering focused on storytelling, fond laughter, and shared memories:',
+        heading: 'Memorial Celebration Order of Service',
+        content: 'A memorial service or celebration of life held without the casket present:',
+        copyable: ORDER_OF_SERVICE_TEMPLATES.memorial_celebration,
         bullets: [
-          'Welcome & Opening Remarks by Host or Family',
-          'Candle Lighting or Moment of Quiet Reflection',
-          'Poetry Reading or Personal Letter',
-          'Interactive Memories & Open Microphone',
-          'Commemorative Video Presentation',
-          'Closing Blessing & Invitation to Repast'
+          'Gathering Music / Prelude · Welcome',
+          'Opening Prayer · Scripture Reading',
+          'Musical Selection · Reading of the Life Story',
+          'Photo / Video Tribute Presentation',
+          'Reflections & Remembrances from Family & Friends',
+          'Favorite Poem or Reading · Eulogy / Tribute',
+          'Closing Prayer, Benediction & Recessional Music'
         ]
+      },
+      {
+        heading: 'Order of Christian Funeral Mass',
+        content: 'The Roman Catholic liturgy format including the Liturgy of the Word and Holy Communion:',
+        copyable: ORDER_OF_SERVICE_TEMPLATES.funeral_mass,
+        bullets: [
+          'Sprinkling with Holy Water & Placing of the Pall',
+          'Entrance Hymn & Processional · Collect',
+          'First Reading (OT), Responsorial Psalm, Second Reading (NT)',
+          'Gospel Reading & Homily · Prayers of the Faithful',
+          'Liturgy of the Eucharist & Holy Communion',
+          'Words of Remembrance · Final Commendation & Song of Farewell'
+        ]
+      },
+      {
+        heading: 'Custom Order of Service',
+        content: 'Personalized service format tailored to your family’s traditions and spiritual preferences:',
+        copyable: ORDER_OF_SERVICE_TEMPLATES.custom
       }
     ]
   },
   {
     id: 'poems-prayers-scriptures',
-    tag: 'Inspirational readings',
-    title: 'Poems, Prayers & Scriptures',
-    description: 'Curated collection of beloved biblical passages, comforting poems, and uplifting verses categorized for easy placement.',
+    tag: 'Numbered list #01–#11',
+    title: 'Poems, Prayers & Scriptures (#01–#11)',
+    description: 'Our official numbered catalog (#01–#11). Families can select by number on the order form, ensuring the exact approved text is printed.',
     iconName: 'Heart',
-    sections: [
-      {
-        heading: 'Beloved Biblical Passages',
-        content: 'Timeless verses frequently included on prayer cards and program covers:',
-        bullets: [
-          'Psalm 23: "The Lord is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters..."',
-          'Ecclesiastes 3:1-8: "To every thing there is a season, and a time to every purpose under the heaven: A time to be born, and a time to die..."',
-          '2 Timothy 4:7-8: "I have fought the good fight, I have finished my course, I have kept the faith: Henceforth there is laid up for me a crown of righteousness..."',
-          'John 14:1-3: "Let not your heart be troubled: ye believe in God, believe also in me. In my Father\'s house are many mansions..."'
-        ],
-        copyable: `PSALM 23\n\nThe Lord is my shepherd; I shall not want.\nHe maketh me to lie down in green pastures:\nHe leadeth me beside the still waters.\nHe restoreth my soul:\nHe leadeth me in the paths of righteousness for his name's sake.\nYea, though I walk through the valley of the shadow of death,\nI will fear no evil: for thou art with me;\nThy rod and thy staff they comfort me.\nThou preparest a table before me in the presence of mine enemies:\nThou anointest my head with oil; my cup runneth over.\nSurely goodness and mercy shall follow me all the days of my life:\nAnd I will dwell in the house of the Lord for ever.`
-      },
-      {
-        heading: 'Comforting Memorial Poetry',
-        content: 'Poetic reflections that bring tears of peace and comfort to family members:',
-        bullets: [
-          '"Do Not Stand at My Grave and Weep" by Mary Elizabeth Frye: "Do not stand at my grave and weep; I am not there. I do not sleep. I am a thousand winds that blow. I am the diamond glints on snow..."',
-          '"A Life Well Lived": "A life well lived is a precious gift, of hope and strength and grace, from someone who has made our world a brighter, better place."'
-        ]
-      }
-    ]
+    sections: POEMS_AND_PRAYERS_LIST.map((item) => ({
+      heading: `${item.numberLabel}: ${item.title}`,
+      content: `${item.category ? `Category: ${item.category}` : ''}${item.author ? ` · Written by ${item.author}` : ''}`,
+      copyable: item.fullText
+    }))
   },
   {
     id: 'acknowledgements-wording',
-    tag: 'Sample wording',
-    title: 'Acknowledgements Wording',
-    description: 'Sample expressions of gratitude for families, clergy, hospital caregivers, medical staff, friends, and community members.',
+    tag: 'Numbered list A1–A6',
+    title: 'Acknowledgements Wording (A1–A6)',
+    description: 'Our official numbered acknowledgement catalog (A1–A6). Select by code on the order form to print our exact approved wording on the program back cover.',
     iconName: 'FileText',
-    sections: [
-      {
-        heading: 'Option 1: Traditional Family Acknowledgement',
-        content: 'A comprehensive, warm note of thanks suitable for any program back cover:',
-        copyable: `The family of our beloved [Loved One's Name] wishes to express our deepest gratitude and heartfelt appreciation for the many prayers, comforting telephone calls, visits, floral tributes, and generous acts of kindness shown to us during our time of bereavement. Your warmth and love have brought solace to our hearts. May God richly bless each and every one of you.`
-      },
-      {
-        heading: 'Option 2: Poetic Rhyming Expression',
-        content: 'A classic verse widely appreciated across generations:',
-        copyable: `Perhaps you sent a lovely card, or sat quietly in a chair.\nPerhaps you sent a floral spray; if so, we saw it there.\nPerhaps you spoke the kindest words, that any friend could say;\nPerhaps you were not there at all, just thought of us today.\nWhatever you did to console our hearts,\nWe thank you so much, whatever the part.`
-      },
-      {
-        heading: 'Option 3: Medical Caregivers & Hospital Team Gratitude',
-        content: 'Specially thanking healthcare workers and hospice caregivers:',
-        copyable: `We extend our deepest gratitude to the physicians, nursing staff, and hospice care team at [Hospital / Care Center] for their exceptional compassion, gentle dignity, and tireless support provided to [Loved One's Name] and our family throughout their journey.`
-      }
-    ]
+    sections: ACKNOWLEDGEMENTS_LIST.map((item) => ({
+      heading: `${item.numberLabel}: ${item.title}`,
+      content: 'Approved family gratitude text for back cover or prayer card:',
+      copyable: item.fullText
+    }))
   },
   {
     id: 'obituary-writing-assistance',
@@ -216,7 +196,7 @@ const PLANNING_GUIDES: GuideItem[] = [
       },
       {
         heading: 'Do You Offer Same-Day or Emergency Rush Services?',
-        content: 'Yes. We understand that funeral schedules can arise abruptly. Lilies of the Field offers same-day rush turnaround and printing for local families and funeral providers with expedited delivery across Brooklyn, Queens, Manhattan, Staten Island, and the Bronx.'
+        content: 'Yes. We understand that funeral schedules can arise abruptly. Lilies of the Field offers rush turnaround and printing for families and funeral providers, with appointments and pickups at our Queens Village studio (21229 Jamaica Avenue) and expedited delivery across the New York metropolitan area and nationwide.'
       },
       {
         heading: 'How Should We Send Photos to the Studio?',

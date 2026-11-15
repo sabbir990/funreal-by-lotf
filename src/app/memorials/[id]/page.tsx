@@ -23,140 +23,13 @@ import {
   CheckCircle2
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
-
-interface RemembrancePhoto {
-  url: string
-  caption: string
-}
-
-interface MemorialDetail {
-  id: string
-  full_name: string
-  date_of_birth: string
-  date_of_passing: string
-  lifespan: string
-  quote: string
-  story: string
-  service_date: string
-  service_location: string
-  service_time: string
-  officiant: string
-  cover_image_url: string
-  photos: RemembrancePhoto[]
-}
-
-interface Tribute {
-  id: string
-  author_name: string
-  relationship?: string
-  message: string
-  created_at: string
-}
-
-const MEMORIAL_DATABASE: Record<string, MemorialDetail> = {
-  'robert-james-miller': {
-    id: 'robert-james-miller',
-    full_name: 'Robert James Miller',
-    date_of_birth: '1935-01-12',
-    date_of_passing: '2023-11-18',
-    lifespan: 'January 12, 1935 — November 18, 2023',
-    quote: '“A man of steadfast honor, quiet strength, and everlasting devotion to his family.”',
-    story: 'Robert James Miller served proudly as a veteran, master carpenter, and loving husband for sixty-one years. Born in Queens and a lifelong resident of Brooklyn, Robert built not only homes and furniture with his hands, but a legacy of discipline, integrity, and warmth that anchored three generations.',
-    service_date: 'Monday, November 27, 2023',
-    service_location: 'St. Augustine Sanctuary, Brooklyn, NY',
-    service_time: '10:00 AM ET',
-    officiant: 'Father Thomas Bennett',
-    cover_image_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&crop=faces&w=800&h=650&q=80',
-    photos: [
-      {
-        url: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=800&h=600&q=80',
-        caption: 'Robert James Miller remembrance photo 1'
-      },
-      {
-        url: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&h=600&q=80',
-        caption: 'Robert James Miller remembrance photo 2'
-      }
-    ]
-  },
-  'eleanor-grace-dawson': {
-    id: 'eleanor-grace-dawson',
-    full_name: 'Eleanor Grace Dawson',
-    date_of_birth: '1948-04-12',
-    date_of_passing: '2024-02-18',
-    lifespan: 'April 12, 1948 — February 18, 2024',
-    quote: '“Her kindness was a quiet river, nourishing every heart she touched throughout her vibrant seventy-five years.”',
-    story: 'A devoted educator for over thirty-five years in the Brooklyn public school system, master pianist, and beloved matriarch. Eleanor inspired hundreds of young minds and filled her family home with classical melody, warmth, and boundless Sunday dinners.',
-    service_date: 'Saturday, February 24, 2024',
-    service_location: 'Grace Episcopal Chapel, Brooklyn Heights, NY',
-    service_time: '11:00 AM ET',
-    officiant: 'Reverend Sarah Jenkins',
-    cover_image_url: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&crop=faces&w=800&h=650&q=80',
-    photos: [
-      {
-        url: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=800&h=600&q=80',
-        caption: 'Eleanor Grace Dawson remembrance photo 1'
-      },
-      {
-        url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&h=600&q=80',
-        caption: 'Eleanor Grace Dawson remembrance photo 2'
-      }
-    ]
-  },
-  'elizabeth-mae-reed': {
-    id: 'elizabeth-mae-reed',
-    full_name: 'Elizabeth Mae Reed',
-    date_of_birth: '1951-06-15',
-    date_of_passing: '2023-09-22',
-    lifespan: 'June 15, 1951 — September 22, 2023',
-    quote: '“A life lived with gentle grace and deep, unconditional love for all.”',
-    story: 'A dedicated pediatric nurse, botanical artist, and avid gardener whose quiet grace and gentle touch brought comfort to countless patients. Elizabeth lived her life with radiant joy, steadfast compassion, and eternal faith.',
-    service_date: 'Friday, September 29, 2023',
-    service_location: 'Whispering Pines Memorial Chapel, Brooklyn, NY',
-    service_time: '2:00 PM ET',
-    officiant: 'Pastor David Vance',
-    cover_image_url: 'https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&crop=faces&w=800&h=650&q=80',
-    photos: [
-      {
-        url: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&h=600&q=80',
-        caption: 'Elizabeth Mae Reed remembrance photo 1'
-      },
-      {
-        url: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&w=800&h=600&q=80',
-        caption: 'Elizabeth Mae Reed remembrance photo 2'
-      }
-    ]
-  }
-}
-
-const DEFAULT_TRIBUTES: Record<string, Tribute[]> = {
-  'robert-james-miller': [
-    {
-      id: 'trib-1',
-      author_name: 'Thomas R. Miller Jr.',
-      relationship: 'Brother',
-      message: 'Uncle Bob taught me how to measure twice and cut once—not just in woodwork, but in life. He will be deeply missed.',
-      created_at: 'November 20, 2024'
-    }
-  ],
-  'eleanor-grace-dawson': [
-    {
-      id: 'trib-2',
-      author_name: 'Clara Dawson Wright',
-      relationship: 'Niece',
-      message: 'Aunt Eleanor made every holiday magical with her laughter and piano melodies. Rest peacefully in God\'s embrace.',
-      created_at: 'February 20, 2024'
-    }
-  ],
-  'elizabeth-mae-reed': [
-    {
-      id: 'trib-3',
-      author_name: 'Katherine Vance',
-      relationship: 'Dear Friend',
-      message: 'Elizabeth had a garden of flowers in her heart. Her calm voice was medicine to so many young mothers.',
-      created_at: 'September 24, 2023'
-    }
-  ]
-}
+import { 
+  MEMORIAL_DATABASE, 
+  DEFAULT_TRIBUTES, 
+  MemorialDetail, 
+  Tribute 
+} from '@/data/memorialsData'
+import DigitalProgramFlipViewer from '@/components/DigitalProgramFlipViewer'
 
 function MemorialContent({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params)
@@ -171,6 +44,10 @@ function MemorialContent({ params }: { params: Promise<{ id: string }> }) {
   const [qrModalOpen, setQrModalOpen] = useState(false)
   const [programModalOpen, setProgramModalOpen] = useState(false)
   const [copied, setCopied] = useState(false)
+
+  // Dynamic gender-based pronouns as requested by client (His/Her/Their Story)
+  const pronounStory = memorial.gender === 'male' ? 'His Story' : memorial.gender === 'female' ? 'Her Story' : 'Their Story'
+  const pronounCelebrating = memorial.gender === 'male' ? 'Celebrating His Life' : memorial.gender === 'female' ? 'Celebrating Her Life' : 'Celebrating Their Life'
 
   // Tribute Form State
   const [authorName, setAuthorName] = useState('')
@@ -211,13 +88,15 @@ function MemorialContent({ params }: { params: Promise<{ id: string }> }) {
               setMemorial({
                 id: data.id,
                 full_name: data.full_name,
+                gender: 'neutral',
+                product_type: 'legacy-tribute',
                 date_of_birth: data.date_of_birth,
                 date_of_passing: data.date_of_passing,
                 lifespan: `${new Date(data.date_of_birth).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })} — ${new Date(data.date_of_passing).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}`,
                 quote: data.biography || '“A life beautifully lived and forever cherished in our hearts.”',
                 story: data.obituary_text || data.biography || 'A life filled with loving grace, family devotion, and enduring cherished memories.',
                 service_date: data.service_date ? new Date(data.service_date).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) : 'Private Family Gathering',
-                service_location: data.service_venue || 'Sanctuary Memorial Chapel, Brooklyn, NY',
+                service_location: data.service_venue || 'Sanctuary Memorial Chapel, Queens Village, NY',
                 service_time: data.service_date ? new Date(data.service_date).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }) : '11:00 AM ET',
                 officiant: 'Family Appointed Clergy',
                 cover_image_url: data.cover_image_url || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&crop=faces&w=800&h=650&q=80',
@@ -230,7 +109,8 @@ function MemorialContent({ params }: { params: Promise<{ id: string }> }) {
                     url: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&h=600&q=80',
                     caption: `${data.full_name} remembrance photo 2`
                   }
-                ]
+                ],
+                program: MEMORIAL_DATABASE['eleanor-grace-dawson'].program
               })
             }
           }
@@ -434,6 +314,22 @@ function MemorialContent({ params }: { params: Promise<{ id: string }> }) {
             >
               <QrCode size={15} /> Scan &amp; Share QR
             </button>
+            <Link
+              href={`/digital-program/${memorial.id}`}
+              className="b"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                fontSize: '12px',
+                padding: '11px 22px',
+                background: '#faf8f4',
+                color: '#1f6f68',
+                fontWeight: 600
+              }}
+            >
+              Digital Program Page ↗
+            </Link>
           </div>
         </div>
       </section>
@@ -454,10 +350,10 @@ function MemorialContent({ params }: { params: Promise<{ id: string }> }) {
             gap: '32px'
           }}>
 
-            {/* A. Their Story Card */}
+            {/* A. His / Her / Their Story Card */}
             <div className="cd cb" style={{ padding: 'clamp(20px, 3.5vw, 36px)', background: '#ffffff', borderRadius: '6px', border: '1px solid #ece6db' }}>
               <h2 className="s" style={{ fontSize: 'clamp(20px, 2.5vw, 23px)', marginBottom: '14px', color: '#262626', fontWeight: 600 }}>
-                Their Story
+                {pronounStory}
               </h2>
               <p style={{
                 fontSize: 'clamp(14px, 1.5vw, 15px)',
@@ -469,11 +365,11 @@ function MemorialContent({ params }: { params: Promise<{ id: string }> }) {
               </p>
             </div>
 
-            {/* B. Celebrating Their Life (Photo Memories) */}
+            {/* B. Celebrating His / Her / Their Life (Photo Memories) */}
             <div className="cd cb" style={{ padding: 'clamp(20px, 3.5vw, 36px)', background: '#ffffff', borderRadius: '6px', border: '1px solid #ece6db' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '10px' }}>
                 <h2 className="s" style={{ fontSize: 'clamp(20px, 2.5vw, 23px)', color: '#262626', fontWeight: 600, margin: 0 }}>
-                  Celebrating Their Life
+                  {pronounCelebrating}
                 </h2>
                 <span style={{
                   fontSize: '12px',
@@ -835,7 +731,7 @@ function MemorialContent({ params }: { params: Promise<{ id: string }> }) {
               fontSize: '14.5px',
               marginBottom: '6px'
             }}>
-              Preserved with care by Lilies of the Field Memorial Keepsakes · Brooklyn, NY
+              Preserved with care by Lilies of the Field Memorial Keepsakes
             </p>
             <p className="tx" style={{ fontSize: '12px', color: '#666', margin: 0 }}>
               To create a lasting Legacy Tribute or order memorial keepsakes, contact us at (917) 300-1104 or orders@liliesofthefield.design
@@ -920,96 +816,13 @@ function MemorialContent({ params }: { params: Promise<{ id: string }> }) {
         </div>
       )}
 
-      {/* 4. Digital Memorial Program Modal */}
+      {/* 4. Digital Memorial Program Flip Viewer Modal (Overlay on Tribute Page) */}
       {programModalOpen && (
-        <div style={{
-          position: 'fixed',
-          inset: 0,
-          background: 'rgba(0,0,0,0.7)',
-          backdropFilter: 'blur(8px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '20px',
-          zIndex: 10000
-        }}>
-          <div style={{
-            background: '#ffffff',
-            borderRadius: '8px',
-            maxWidth: '680px',
-            width: '100%',
-            maxHeight: '90vh',
-            overflowY: 'auto',
-            padding: '36px',
-            boxShadow: '0 25px 50px rgba(0,0,0,0.3)',
-            position: 'relative'
-          }}>
-            <button 
-              onClick={() => setProgramModalOpen(false)}
-              style={{
-                position: 'absolute',
-                top: '18px',
-                right: '18px',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                color: '#666'
-              }}
-            >
-              <X size={22} />
-            </button>
-
-            <div style={{ textAlign: 'center', borderBottom: '1px solid #eee', paddingBottom: '20px', marginBottom: '24px' }}>
-              <p className="eb">Digital Memorial Program</p>
-              <h2 className="s" style={{ fontSize: '28px', color: '#262626', marginBottom: '6px' }}>
-                In Loving Memory of {memorial.full_name}
-              </h2>
-              <p style={{ color: '#a87a22', fontStyle: 'italic', fontSize: '15px' }}>
-                {memorial.lifespan}
-              </p>
-            </div>
-
-            {/* Program Pages Content */}
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '24px',
-              fontSize: '14px',
-              lineHeight: 1.7,
-              color: '#333'
-            }}>
-              <div style={{ background: '#faf8f4', padding: '20px', borderRadius: '6px', border: '1px solid #e8dfd2' }}>
-                <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', marginBottom: '10px', color: '#1f6f68' }}>
-                  Order of Sacred Service
-                </h4>
-                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <li><strong>Musical Prelude</strong> · Ave Maria (Schubert)</li>
-                  <li><strong>Processional</strong> · Family &amp; Pallbearers</li>
-                  <li><strong>Opening Prayer &amp; Invocation</strong> · {memorial.officiant}</li>
-                  <li><strong>Scripture Reading</strong> · Psalm 23</li>
-                  <li><strong>Reflections &amp; Tributes</strong> · Family Members &amp; Friends</li>
-                  <li><strong>Words of Remembrance &amp; Eulogy</strong></li>
-                  <li><strong>Benediction &amp; Recessional</strong></li>
-                </ul>
-              </div>
-
-              <div style={{ padding: '10px 0' }}>
-                <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', marginBottom: '8px', color: '#1f6f68' }}>
-                  Words of Appreciation
-                </h4>
-                <p style={{ fontStyle: 'italic', color: '#555' }}>
-                  The family of {memorial.full_name} wishes to express our heartfelt gratitude for the prayers, love, flowers, and comforting expressions of sympathy extended during our time of sorrow.
-                </p>
-              </div>
-            </div>
-
-            <div style={{ marginTop: '28px', textAlign: 'center', borderTop: '1px solid #eee', paddingTop: '18px' }}>
-              <button onClick={() => setProgramModalOpen(false)} className="b b1" style={{ padding: '10px 24px' }}>
-                Close Program
-              </button>
-            </div>
-          </div>
-        </div>
+        <DigitalProgramFlipViewer 
+          memorial={memorial} 
+          isOverlay={true} 
+          onClose={() => setProgramModalOpen(false)} 
+        />
       )}
 
       {/* 5. Floating Action Buttons on the Right */}

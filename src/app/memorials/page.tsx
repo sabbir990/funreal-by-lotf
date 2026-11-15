@@ -241,7 +241,7 @@ export default function ForeverRememberedPage() {
                       {memorial.quote}
                     </p>
                     <Link 
-                      href={`/memorials/${memorial.id}`} 
+                      href={memorial.button_label === 'View Memorial Program' ? `/digital-program/${memorial.id}` : `/memorials/${memorial.id}`} 
                       className="b" 
                       style={{
                         display: 'block',

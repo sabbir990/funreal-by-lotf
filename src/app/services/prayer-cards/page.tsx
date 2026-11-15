@@ -455,7 +455,7 @@ export default function PrayerCardsPage() {
                   Estimated Order Ready Date
                 </h2>
                 <div style={{ fontSize: '13px', color: '#666', marginTop: '3px' }}>
-                  Real-time production scheduling based on active press capacity in Brooklyn, NY
+                  Real-time production scheduling based on active studio press capacity
                 </div>
               </div>
               <div style={{

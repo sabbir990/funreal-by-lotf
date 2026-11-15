@@ -93,7 +93,7 @@ export default function Home() {
             {/* Left column */}
             <div style={{ paddingTop: '8px' }}>
               <p className="eb">
-                Bespoke Memorial Design &amp; Fine Printing · Brooklyn, NY
+                Bespoke Memorial Design &amp; Fine Keepsakes
               </p>
 
               <h1 className="s" style={{
@@ -537,7 +537,7 @@ export default function Home() {
                 fontWeight: 600,
                 letterSpacing: '0.04em'
               }}>
-                Lilies of the Field Design Studio · Brooklyn, NY
+                Lilies of the Field Design Studio
               </div>
             </div>
           </div>
@@ -724,7 +724,7 @@ export default function Home() {
                 <p className="tx" style={{ color: '#a87a22', fontWeight: 600 }}>
                   1935 — 2023
                 </p>
-                <Link href="/memorials/robert-james-miller">
+                <Link href="/digital-program/robert-james-miller">
                   <p className="eb" style={{ margin: '14px 0 0', cursor: 'pointer' }}>
                     View Memorial Program →
                   </p>
